@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.539
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nojira-daemon", "nojira-daemon\nojira-daemon.csproj", "{851535CD-F193-4F9E-AAEA-6767EE102824}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nojira-client", "nojira-client\nojira-client.csproj", "{834FC806-3681-40A2-AB26-942D6CE4B4FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nojira-test", "nojira-test\nojira-test.csproj", "{91771A91-2DD3-43C6-A349-79D4D69BE5F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{851535CD-F193-4F9E-AAEA-6767EE102824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{851535CD-F193-4F9E-AAEA-6767EE102824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{851535CD-F193-4F9E-AAEA-6767EE102824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{851535CD-F193-4F9E-AAEA-6767EE102824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{834FC806-3681-40A2-AB26-942D6CE4B4FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{834FC806-3681-40A2-AB26-942D6CE4B4FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{834FC806-3681-40A2-AB26-942D6CE4B4FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{834FC806-3681-40A2-AB26-942D6CE4B4FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91771A91-2DD3-43C6-A349-79D4D69BE5F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91771A91-2DD3-43C6-A349-79D4D69BE5F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91771A91-2DD3-43C6-A349-79D4D69BE5F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91771A91-2DD3-43C6-A349-79D4D69BE5F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9207703E-A19A-4A16-8E41-DE44F5852E50}
+	EndGlobalSection
+EndGlobal
