@@ -48,5 +48,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\nojira-client\nojira-client.csproj">
+      <Project>{834fc806-3681-40a2-ab26-942d6ce4b4fc}</Project>
+      <Name>nojira-client</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
