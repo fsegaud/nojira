@@ -62,14 +62,21 @@ namespace Nojira.Daemon
             sb.AppendLine($"<a href=\"/\">*</a> ");
             foreach (DB.Log log in DB.SelectProject())
             {
-                sb.AppendLine($"<a href=\"/{log.Project}\">{log.Project}</a> ");
+                sb.AppendLine($"<a href=\"/project/{log.Project}\">{log.Project}</a> ");
             }
 
             sb.AppendLine("</td></tr><tr><td><b>Tags</b></td><td>");
 
             foreach (DB.Log log in DB.SelectProjectTag())
             {
-                sb.AppendLine($"<a href=\"/{log.Project}/{log.Tag}\">{log.Project}/{log.Tag}</a> ");
+                sb.AppendLine($"<a href=\"/project/{log.Project}/{log.Tag}\">{log.Project}/{log.Tag}</a> ");
+            }
+
+            sb.AppendLine("</td></tr><tr><td><b>Machines</b></td><td>");
+
+            foreach (DB.Log log in DB.SelectMachineName())
+            {
+                sb.AppendLine($"<a href=\"/machine/{log.MachineName}\">{log.MachineName}</a> ");
             }
 
             sb.AppendLine("</td></tr></table><br/>");

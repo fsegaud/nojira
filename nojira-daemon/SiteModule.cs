@@ -40,7 +40,22 @@ namespace Nojira.Daemon
             });
 
             this.Get(
-                "/{project}", 
+                "/machine/{machine}",
+                args =>
+                {
+                    return new Nancy.Response()
+                    {
+                        ContentType = "text/html",
+                        Contents = stream =>
+                        {
+                            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(DB.SelectLogByMachine(args.machine))));
+                            stream.Write(bytes, 0, bytes.Length);
+                        }
+                    };
+                });
+
+            this.Get(
+                "/project/{project}", 
                 args =>
             {
                 return new Nancy.Response()
@@ -48,14 +63,14 @@ namespace Nojira.Daemon
                     ContentType = "text/html",
                     Contents = stream =>
                     {
-                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(DB.SelectLog(args.project))));
+                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(DB.SelectLogByProject(args.project))));
                         stream.Write(bytes, 0, bytes.Length);
                     }
                 };
             });
 
             this.Get(
-                "/{project}/{tag}", 
+                "/project/{project}/{tag}", 
                 args =>
             {
                 return new Nancy.Response()
@@ -63,7 +78,7 @@ namespace Nojira.Daemon
                     ContentType = "text/html",
                     Contents = stream =>
                     {
-                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(DB.SelectLog(args.project, args.tag))));
+                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(DB.SelectLogBtProjectAndTag(args.project, args.tag))));
                         stream.Write(bytes, 0, bytes.Length);
                     }
                 };

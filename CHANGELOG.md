@@ -1,8 +1,10 @@
 # Changelog
 
 ## Unreleased - ????-??-??
+### Added
+- [daemon] A log filter based on machine names.
 ### Changed
- - [daemon] Changed the web interface font family and title size.
+- [daemon] Changed the web interface font family and title size.
 
 ## v0.2-dev - 2021-02-28
 ### Added
