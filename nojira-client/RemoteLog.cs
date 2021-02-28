@@ -2,16 +2,10 @@
 {
     public class RemoteLog
     {
-        private static string uri = "http://localhost:1410";
-        private static string project = "default";
+        public static string Uri = "http://localhost:1410";
+        public static string Project = "default";
 
         public static System.Exception LastException= null;
-
-        public static void Init(string uri, string project)
-        {
-            RemoteLog.uri = uri.TrimEnd('/');
-            RemoteLog.project = project;
-        }
 
         public static bool LogInfo(string tag, string message)
         {
@@ -37,7 +31,7 @@
 
             try
             {
-                System.Net.WebRequest request = System.Net.WebRequest.Create($"{uri}/api/log/{type}/{project}/{tag}/{message}");
+                System.Net.WebRequest request = System.Net.WebRequest.Create($"{Uri.TrimEnd('/')}/api/log/{type}/{Project}/{tag}/{message}");
                 System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
                 response.Close();
 

@@ -4,7 +4,8 @@ namespace Nojira.Test
     {
         static void Main(string[] args)
         {
-            Nojira.Client.RemoteLog.Init("http://localhost:1410", "nojira");
+            Nojira.Client.RemoteLog.Uri = "http://localhost:1410";
+            Nojira.Client.RemoteLog.Project = "nojira";
 
             Nojira.Client.RemoteLog.LogInfo("test", "test of an info message.");
             Nojira.Client.RemoteLog.LogWarning("test", "test of an warning message.");
