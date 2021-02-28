@@ -1,8 +1,6 @@
 Nojira (ノジラ) is a softawre suite that allows remote logging.
 
-It relies on .NET 4.6.1, and includes packages _NancyFX_, _SQLite-net_, _Newtonsoft.Json_ and thei respective dependences.
-
-![web interface screenshot](README.md.files/web.png)
+It relies on .NET 4.6.1, and includes packages _NancyFX_, _SQLite-net_, _Newtonsoft.Json_ and their respective dependences.
 
 # nojira-daemon
 This is the process that will serve API request and web interface requests.
@@ -33,17 +31,21 @@ CREATE TABLE "Log" (
 "Message" varchar(256) )
 ```
 
+## Web interface
+The web interface is accessible at `BaseUri` (by default: http://localhost:1410/).
+![web interface screenshot](README.md.files/web.png)
+
 # nojira-client
 This is the C# client that send the HTTP requests.
 ```csharp
 // Setup.
-Nojira.Client.RemoteLog.Uri = "http://localhost:1410";
-Nojira.Client.RemoteLog.Project = "nojira";
+NojiraClient.Uri = "http://localhost:1410";
+NojiraClient.Project = "nojira";
 
 // Logs.
-Nojira.Client.RemoteLog.LogInfo("test", "test of an info message.");
-Nojira.Client.RemoteLog.LogWarning("test", "test of an warning message.");
-Nojira.Client.RemoteLog.LogError("test", "test of an error message.");
+NojiraClient.LogInfo("test", "test of an info message.");
+NojiraClient.LogWarning("test", "test of an warning message.");
+NojiraClient.LogError("test", "test of an error message.");
 ```
 
 # nojira-test

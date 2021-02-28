@@ -20,7 +20,7 @@
 
 namespace Nojira.Client
 {
-    public class RemoteLog
+    public class NojiraClient
     {
         public static string Uri = "http://localhost:1410";
         public static string Project = "default";
@@ -29,22 +29,22 @@ namespace Nojira.Client
 
         public static bool LogInfo(string tag, string message)
         {
-            return RemoteLog.Log("info", tag, message);
+            return NojiraClient.Log("info", tag, message);
         }
 
         public static bool LogWarning(string tag, string message)
         {
-            return RemoteLog.Log("warning", tag, message);
+            return NojiraClient.Log("warning", tag, message);
         }
 
         public static bool LogError(string tag, string message)
         {
-            return RemoteLog.Log("error", tag, message);
+            return NojiraClient.Log("error", tag, message);
         }
 
         private static bool Log(string type, string tag, string message)
         {
-            if (RemoteLog.LastException != null)
+            if (NojiraClient.LastException != null)
             {
                 return false;
             }
@@ -59,7 +59,7 @@ namespace Nojira.Client
             }
             catch (System.Exception e)
             {
-                RemoteLog.LastException = e;
+                NojiraClient.LastException = e;
                 return false;
             }
         }
