@@ -48,4 +48,12 @@
       </AnalyzerSettings>
     </Analyzer>
   </Analyzers>
+  <SourceFileList>
+    <SourceFile>AssemblyInfo.cs</SourceFile>
+    <Settings>
+      <GlobalSettings>
+        <BooleanProperty Name="RulesEnabledByDefault">False</BooleanProperty>
+      </GlobalSettings>
+    </Settings>
+  </SourceFileList>
 </StyleCopSettings>
