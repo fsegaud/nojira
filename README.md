@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/fsegaud/nojira/actions/workflows/build.yml/badge.svg)](https://github.com/fsegaud/nojira/actions/workflows/build.yml)
 
-Nojira is a softawre suite that allows remote logging.
+Nojira is a software suite that allows remote logging.
 
 It relies on .NET 4.6.1, and includes packages _NancyFX_, _SQLite-net_, _Newtonsoft.Json_ and their respective dependences.
 

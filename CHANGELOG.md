@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased - ????-??-??
+### Changed
+ - [daemon] Changed the web interface font family and title size.
+
 ## v0.2-dev - 2021-02-28
 ### Added
 - [daemon] Added a new database field `Log.MachineName` and the corresponding `machine` API field.
