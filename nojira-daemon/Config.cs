@@ -30,7 +30,7 @@ namespace Nojira.Daemon
 
         private static UserConfig userConfig = null;
 
-        public static string Title => Config.userConfig != null ? Config.userConfig.Title : "CompanyName";
+        public static string Title => Config.userConfig != null ? Config.userConfig.Title : "nojira-" + Program.Version;
 
         public static string BaseUri => Config.userConfig != null ? Config.userConfig.BaseUri : "http://localhost:1410";
 
