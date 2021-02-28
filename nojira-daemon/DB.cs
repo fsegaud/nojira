@@ -47,14 +47,24 @@ namespace Nojira.Daemon
             return DB.connection.Query<Log>("SELECT * FROM Log;");
         }
 
-        public static System.Collections.Generic.IEnumerable<Log> SelectLog(string project)
+        public static System.Collections.Generic.IEnumerable<Log> SelectLogByMachine(string machineName)
+        {
+            return DB.connection.Query<Log>($"SELECT * FROM Log WHERE MachineName = '{DB.Escape(machineName)}';");
+        }
+
+        public static System.Collections.Generic.IEnumerable<Log> SelectLogByProject(string project)
         {
             return DB.connection.Query<Log>($"SELECT * FROM Log WHERE Project = '{DB.Escape(project)}';");
         }
 
-        public static System.Collections.Generic.IEnumerable<Log> SelectLog(string project, string tag)
+        public static System.Collections.Generic.IEnumerable<Log> SelectLogBtProjectAndTag(string project, string tag)
         {
             return DB.connection.Query<Log>($"SELECT * FROM Log WHERE Project = '{DB.Escape(project)}' AND Tag = '{DB.Escape(tag)}';");
+        }
+
+        public static System.Collections.Generic.IEnumerable<Log> SelectMachineName()
+        {
+            return DB.connection.Query<Log>($"SELECT DISTINCT MachineName FROM Log;");
         }
 
         public static System.Collections.Generic.IEnumerable<Log> SelectProject()
