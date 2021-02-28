@@ -75,7 +75,7 @@ namespace Nojira.Daemon
             sb.AppendLine("</td></tr></table><br/>");
 
             sb.AppendLine("<table class=\"logs\">");
-            sb.AppendLine($"<thead><tr><td>Timestamp</td><td>Type</td><td>Project</td><td>Tag</td><td>Message</td></tr></thead>");
+            sb.AppendLine($"<thead><tr><td>Timestamp</td><td>Machine</td><td>Type</td><td>Project</td><td>Tag</td><td>Message</td></tr></thead>");
 
             foreach (DB.Log log in logs)
             {
@@ -93,7 +93,7 @@ namespace Nojira.Daemon
                         break;
                 }
 
-                sb.AppendLine($"<tr><td>{log.Timestamp}</td><td style=\"color:{color};\">{log.Type}</td><td>{log.Project}</td><td>{log.Tag}</td><td>{log.Message}</td></tr>");
+                sb.AppendLine($"<tr><td>{log.Timestamp}</td><td>{log.MachineName}</td><td style=\"color:{color};\">{log.Type}</td><td>{log.Project}</td><td>{log.Tag}</td><td>{log.Message}</td></tr>");
             }
 
             sb.AppendLine("</table>");

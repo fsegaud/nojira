@@ -1,6 +1,12 @@
 # Changelog
 
 ## Unreleased - ????-??-??
+### Added
+- [daemon] Added a new database field `Log.MachineName` and the corresponding `machine` API field.
+- [client] `Environment.MachineName` is now sent as log info.
+### Changed
+- [daemon] Database field `Log.Project` is now 32 characters long instead of 16.
+- [global] Excluded _AssemblyInfo.cs_ from StyleCop.
 ### Deprecated
 - [client] `Nojira.Client.RemoteLog` class has been renamed to `Nojira.Client.NojiraClient`.
 

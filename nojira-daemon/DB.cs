@@ -79,9 +79,10 @@ namespace Nojira.Daemon
             {
             }
 
-            public Log(System.DateTime timestamp, string type, string project, string tag, string message)
+            public Log(System.DateTime timestamp, string machineName, string type, string project, string tag, string message)
             {
                 this.Timestamp = timestamp;
+                this.MachineName = machineName;
                 this.Type = type;
                 this.Project = project;
                 this.Tag = tag;
@@ -101,6 +102,13 @@ namespace Nojira.Daemon
                 set;
             }
 
+            [SQLite.MaxLength(32)]
+            public string MachineName
+            {
+                get;
+                set;
+            }
+
             [SQLite.MaxLength(16)]
             public string Type
             {
@@ -108,7 +116,7 @@ namespace Nojira.Daemon
                 set;
             }
 
-            [SQLite.MaxLength(16)]
+            [SQLite.MaxLength(32)]
             public string Project
             {
                 get;
