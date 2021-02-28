@@ -49,9 +49,11 @@ namespace Nojira.Client
                 return false;
             }
 
+            string machine = System.Environment.MachineName;
+
             try
             {
-                System.Net.WebRequest request = System.Net.WebRequest.Create($"{Uri.TrimEnd('/')}/api/log/{type}/{Project}/{tag}/{message}");
+                System.Net.WebRequest request = System.Net.WebRequest.Create($"{NojiraClient.Uri.TrimEnd('/')}/api/log/{machine}/{type}/{NojiraClient.Project}/{tag}/{message}");
                 System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
                 response.Close();
 

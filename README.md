@@ -1,4 +1,4 @@
-Nojira (ノジラ) is a softawre suite that allows remote logging.
+**Nojira (ノジラ)** is a softawre suite that allows remote logging.
 
 It relies on .NET 4.6.1, and includes packages _NancyFX_, _SQLite-net_, _Newtonsoft.Json_ and their respective dependences.
 
@@ -25,10 +25,16 @@ Tables are automatically created if the database is empty.
 CREATE TABLE "Log" (
 "Id" integer primary key autoincrement not null ,
 "Timestamp" bigint ,
+"Project" varchar(32) ,
 "Type" varchar(16) ,
-"Project" varchar(16) ,
+"Project" varchar(32) ,
 "Tag" varchar(64) ,
 "Message" varchar(256) )
+```
+
+## API
+```
+BaseUri/log/{machine}/{type}/{project}/{tag}/{message*}
 ```
 
 ## Web interface

@@ -26,17 +26,17 @@ namespace Nojira.Daemon
             : base("api")
         {
             this.Get(
-                "/log/{type}/{project}/{tag}/{message*}", 
+                "/log/{machine}/{type}/{project}/{tag}/{message*}",
                 args =>
-            {
-                string formattedLog = $"[{System.DateTime.Now}] <{args.type}> {args.project}.{args.tag}: {args.message}";
+                {
+                    string formattedLog = $"[{System.DateTime.Now}] <{args.type}> {args.project}.{args.tag}: {args.message}";
 
-                DB.Log log = new DB.Log(System.DateTime.Now, args.type, args.project, args.tag, args.message);
-                DB.InsertLog(log);
+                    DB.Log log = new DB.Log(System.DateTime.Now, args.machine, args.type, args.project, args.tag, args.message);
+                    DB.InsertLog(log);
 
-                System.Console.WriteLine(formattedLog);
-                return "OK";
-            });
+                    System.Console.WriteLine(formattedLog);
+                    return "OK";
+                });
         }
     }
 }
