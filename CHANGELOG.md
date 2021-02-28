@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased - ????-??-??
+## v0.2-dev - 2021-02-28
 ### Added
 - [daemon] Added a new database field `Log.MachineName` and the corresponding `machine` API field.
 - [client] `Environment.MachineName` is now sent as log info.
