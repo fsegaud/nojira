@@ -1,5 +1,6 @@
 # Nojira (ノジラ)
 
+[![Code Analysis](https://github.com/fsegaud/nojira/actions/workflows/code.yml/badge.svg)](https://github.com/fsegaud/nojira/actions/workflows/code.yml)
 [![Build](https://github.com/fsegaud/nojira/actions/workflows/build.yml/badge.svg)](https://github.com/fsegaud/nojira/actions/workflows/build.yml)
 
 Nojira is a software suite that allows remote logging.
