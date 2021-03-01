@@ -1,0 +1,16 @@
+name: Code Analysis
+
+on:
+  pull_request:
+    branches-ignore:
+      - backup/*
+      
+jobs:
+  stylecop-nojira-all:
+
+    runs-on:  windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: StyleCop
+      run: .github/StyleCopCLI/StyleCopCLI.exe -sln nojira.sln
