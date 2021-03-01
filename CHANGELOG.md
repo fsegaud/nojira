@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased - ????-??-??
+## v0.3-dev - 2021-03-01
 ### Added
 - [daemon] A log filter based on machine names.
 ### Changed
