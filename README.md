@@ -17,7 +17,7 @@ Log data are stored in a local SQLite database.
 Configuration can be done by editing the _config.json_ file.
 ```json
 {
-  "Title": "nojira-v0.2-dev",
+  "Title": "nojira-v0.3-dev",
   "BaseUri": "http://localhost:1410",
   "MaxConnections": 16,
   "DatabasePath": "logs.db",
