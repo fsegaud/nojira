@@ -1,0 +1,57 @@
+name: Build
+
+on:
+  pull_request:
+    branches-ignore:
+      - backup/*
+      
+jobs:
+  build-nojira-daemon:
+
+    runs-on:  windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Setup Nuget.exe
+      uses: nuget/setup-nuget@v1
+    - name: Nuget Restore 
+      run: nuget restore .\nojira.sln
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build nojira-daemon/nojira-daemon.csproj --no-restore --configuration Release
+      
+  build-nojira-client:
+
+    runs-on:  windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build nojira-client/nojira-client.csproj --no-restore --configuration Release
+      
+  build-nojira-test:
+
+    runs-on:  windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build nojira-test/nojira-test.csproj --no-restore --configuration Release
+      
