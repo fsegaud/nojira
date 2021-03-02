@@ -23,7 +23,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build nojira-daemon/nojira-daemon.csproj --no-restore --configuration Release
+      run: dotnet build Nojira.Daemon/Nojira.Daemon.csproj --no-restore --configuration Release
       
   build-nojira-client:
 
@@ -38,7 +38,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build nojira-client/nojira-client.csproj --no-restore --configuration Release
+      run: dotnet build Nojira.Client/Nojira.Client.csproj --no-restore --configuration Release
       
   build-nojira-test:
 
@@ -53,5 +53,5 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build nojira-test/nojira-test.csproj --no-restore --configuration Release
+      run: dotnet build Nojira.Test/Nojira.Test.csproj --no-restore --configuration Release
       

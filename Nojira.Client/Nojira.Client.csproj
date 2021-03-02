@@ -7,8 +7,8 @@
     <ProjectGuid>{834FC806-3681-40A2-AB26-942D6CE4B4FC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>nojira_client</RootNamespace>
-    <AssemblyName>nojira-client</AssemblyName>
+    <RootNamespace>Nojira.Client</RootNamespace>
+    <AssemblyName>Nojira.Client</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
