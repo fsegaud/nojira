@@ -13,4 +13,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: StyleCop
-      run: .github/StyleCopCLI/StyleCopCLI.exe -sln nojira.sln
+      run: .github/StyleCopCLI/StyleCopCLI.exe -sln Nojira.sln
