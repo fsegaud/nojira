@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased - ????-??-??
+### Added
+- [daemon] Added an icon to the .exe file.
+### Changed
+- [global] Updated assemblies info.
+- [global] Renamed Visual Studio project files, diretories and binary names to match standard .Net nomenclature.
+
 ## v0.3-dev - 2021-03-01
 ### Added
 - [daemon] A log filter based on machine names.
