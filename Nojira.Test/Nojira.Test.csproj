@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{91771A91-2DD3-43C6-A349-79D4D69BE5F1}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>nojira_test</RootNamespace>
-    <AssemblyName>nojira-test</AssemblyName>
+    <RootNamespace>Nojira.Test</RootNamespace>
+    <AssemblyName>Nojira.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -49,9 +49,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\nojira-client\nojira-client.csproj">
+    <ProjectReference Include="..\Nojira.Client\Nojira.Client.csproj">
       <Project>{834fc806-3681-40a2-ab26-942d6ce4b4fc}</Project>
-      <Name>nojira-client</Name>
+      <Name>Nojira.Client</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

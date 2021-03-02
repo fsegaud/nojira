@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.539
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nojira-daemon", "nojira-daemon\nojira-daemon.csproj", "{851535CD-F193-4F9E-AAEA-6767EE102824}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nojira.Daemon", "Nojira.Daemon\Nojira.Daemon.csproj", "{851535CD-F193-4F9E-AAEA-6767EE102824}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nojira-client", "nojira-client\nojira-client.csproj", "{834FC806-3681-40A2-AB26-942D6CE4B4FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nojira.Client", "Nojira.Client\Nojira.Client.csproj", "{834FC806-3681-40A2-AB26-942D6CE4B4FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nojira-test", "nojira-test\nojira-test.csproj", "{91771A91-2DD3-43C6-A349-79D4D69BE5F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nojira.Test", "Nojira.Test\Nojira.Test.csproj", "{91771A91-2DD3-43C6-A349-79D4D69BE5F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
