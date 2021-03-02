@@ -33,7 +33,7 @@ Tables are automatically created if the database is empty.
 CREATE TABLE "Log" (
 "Id" integer primary key autoincrement not null ,
 "Timestamp" bigint ,
-"Project" varchar(32) ,
+"MachineName" varchar(32) ,
 "Type" varchar(16) ,
 "Project" varchar(32) ,
 "Tag" varchar(64) ,
