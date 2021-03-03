@@ -20,8 +20,16 @@
 
 namespace Nojira.Daemon
 {
+    using System.Linq;
+
     public sealed class SiteModule : Nancy.NancyModule
     {
+        private const char ConditionSeparator = ';';
+        private const char KeySeparator = ':';
+        private const char ValueSeparator = ',';
+        private const string ConditionRegex = @"^\w+:[A-Za-z0-9-._]+(,[A-Za-z0-9-._]+)*$";
+        private static readonly string[] AllowedKeys = { "project", "tag", "type", "machinename" };
+
         public SiteModule()
         {
             this.Get(
@@ -83,6 +91,64 @@ namespace Nojira.Daemon
                     }
                 };
             });
+
+            this.Get(
+                "/q/{query*}", 
+                args =>
+            {
+                return new Nancy.Response()
+                {
+                    ContentType = "text/html",
+                    Contents = stream =>
+                    {
+                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(this.CustomQuery(args.query, out string error)), args.query, error));
+                        stream.Write(bytes, 0, bytes.Length);
+                    }
+                };
+            });
+        }
+
+        private System.Collections.Generic.IEnumerable<DB.Log> CustomQuery(string userQuery, out string error)
+        {
+            string queryCondition = string.Empty;
+            userQuery = userQuery.Replace(" ", string.Empty);
+            string[] conditions = userQuery.Split(SiteModule.ConditionSeparator);
+            for (int conditionIndex = 0; conditionIndex < conditions.Length; conditionIndex++)
+            {
+                string condition = conditions[conditionIndex];
+                if (string.IsNullOrEmpty(condition))
+                {
+                    continue;
+                }
+
+                if (!System.Text.RegularExpressions.Regex.IsMatch(condition, SiteModule.ConditionRegex))
+                {
+                    error = $"Syntax error on '{condition}'";
+                    return DB.SelectLog();
+                }
+
+                string[] tokens = condition.Split(SiteModule.KeySeparator);
+                string key = tokens[0];
+                if (!SiteModule.AllowedKeys.Contains(key.ToLower()))
+                {
+                    error = $"Syntax error on '{condition}', parameter '{key}' is not allowed.";
+                    return DB.SelectLog();
+                }
+
+                string[] values = tokens[1].Split(SiteModule.ValueSeparator);
+                string formattedValues = string.Empty;
+                for (int valueIndex = 0; valueIndex < values.Length; valueIndex++)
+                {
+                    formattedValues += $"{(string.IsNullOrEmpty(formattedValues) ? string.Empty : ", ")}'{values[valueIndex]}'";
+                }
+
+                queryCondition += (string.IsNullOrEmpty(queryCondition) ? "WHERE " : " AND ") + $"{key} IN ({formattedValues})";
+            }
+
+            string sqlQuery = $"SELECT * FROM Log {queryCondition};";
+
+            error = null;
+            return DB.SelectLog(sqlQuery);
         }
     }
 }

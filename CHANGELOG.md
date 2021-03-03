@@ -3,6 +3,7 @@
 ## Unreleased - ????-??-??
 ### Added
 - [daemon] Added an icon to the .exe file.
+- [daemon] Added a query system to filter logs.
 ### Changed
 - [global] Updated assemblies info.
 - [global] Renamed Visual Studio project files, diretories and binary names to match standard .Net nomenclature.
