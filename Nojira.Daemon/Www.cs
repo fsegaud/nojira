@@ -50,7 +50,7 @@ namespace Nojira.Daemon
         {
             return Www.index
                 .Replace("$Title", Config.Title)
-                .Replace("$Links", Www.FormatLinks())
+                .Replace("$Shortcuts", Www.FormatLinks())
                 .Replace("$Query", query ?? string.Empty)
                 .Replace("$Error", error != null ? $"<div id=\"error\">{error}</div>" : string.Empty)
                 .Replace("$Content", content ?? string.Empty)
@@ -83,24 +83,26 @@ namespace Nojira.Daemon
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
             sb.AppendLine("<table><tr><td><b>Projects</b></td><td>");
-            sb.AppendLine($"<a href=\"/\">*</a> ");
+
+            sb.AppendLine($"<a href=\"/\" class=\"shortcut\">*</a> ");
+
             foreach (DB.Log log in DB.SelectProject())
             {
-                sb.AppendLine($"<a href=\"/project/{log.Project}\">{log.Project}</a> ");
+                sb.AppendLine($"<a href=\"/project/{log.Project}\" class=\"shortcut\">{log.Project}</a> ");
             }
 
             sb.AppendLine("</td></tr><tr><td><b>Tags</b></td><td>");
 
             foreach (DB.Log log in DB.SelectProjectTag())
             {
-                sb.AppendLine($"<a href=\"/project/{log.Project}/{log.Tag}\">{log.Project}/{log.Tag}</a> ");
+                sb.AppendLine($"<a href=\"/project/{log.Project}/{log.Tag}\" class=\"shortcut\">{log.Project}/{log.Tag}</a> ");
             }
 
             sb.AppendLine("</td></tr><tr><td><b>Machines</b></td><td>");
 
             foreach (DB.Log log in DB.SelectMachineName())
             {
-                sb.AppendLine($"<a href=\"/machine/{log.MachineName}\">{log.MachineName}</a> ");
+                sb.AppendLine($"<a href=\"/machine/{log.MachineName}\" class=\"shortcut\">{log.MachineName}</a> ");
             }
 
             sb.AppendLine("</td></tr></table>");
