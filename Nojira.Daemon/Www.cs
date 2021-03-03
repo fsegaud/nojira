@@ -50,13 +50,35 @@ namespace Nojira.Daemon
         {
             return Www.index
                 .Replace("$Title", Config.Title)
-                .Replace("$Version", Program.Version)
-                .Replace("$Content", content ?? string.Empty)
+                .Replace("$Links", Www.FormatLinks())
                 .Replace("$Query", query ?? string.Empty)
-                .Replace("$Error", error != null ? $"<div id=\"error\">{error}</div>" : string.Empty);
+                .Replace("$Error", error != null ? $"<div id=\"error\">{error}</div>" : string.Empty)
+                .Replace("$Content", content ?? string.Empty)
+                .Replace("$Version", Program.Version);
         }
 
         public static string FormatArray(System.Collections.Generic.IEnumerable<DB.Log> logs)
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            sb.AppendLine("<table class=\"logs\">");
+            sb.AppendLine($"<thead><tr><td>Timestamp</td><td>Machine</td><td>Type</td><td>Project</td><td>Tag</td><td>Message</td></tr></thead>");
+
+            foreach (DB.Log log in logs)
+            {
+                sb.AppendLine($"<tr><td style=\"min-width:150px;\">{log.Timestamp}</td>" +
+                              $"<td style=\"min-width:150px;\">{log.MachineName}</td>" +
+                              $"<td class=\"{log.Type}\" style=\"min-width:75px;\">{log.Type}</td>" +
+                              $"<td style=\"min-width:75px;\">{log.Project}</td>" +
+                              $"<td style=\"min-width:75px;\">{log.Tag}</td><td>{log.Message}</td></tr>");
+            }
+
+            sb.AppendLine("</table>");
+
+            return sb.ToString();
+        }
+
+        private static string FormatLinks()
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -81,17 +103,7 @@ namespace Nojira.Daemon
                 sb.AppendLine($"<a href=\"/machine/{log.MachineName}\">{log.MachineName}</a> ");
             }
 
-            sb.AppendLine("</td></tr></table><br/>");
-
-            sb.AppendLine("<table class=\"logs\">");
-            sb.AppendLine($"<thead><tr><td>Timestamp</td><td>Machine</td><td>Type</td><td>Project</td><td>Tag</td><td>Message</td></tr></thead>");
-
-            foreach (DB.Log log in logs)
-            {
-                sb.AppendLine($"<tr><td>{log.Timestamp}</td><td>{log.MachineName}</td><td class=\"{log.Type}\">{log.Type}</td><td>{log.Project}</td><td>{log.Tag}</td><td>{log.Message}</td></tr>");
-            }
-
-            sb.AppendLine("</table>");
+            sb.AppendLine("</td></tr></table>");
 
             return sb.ToString();
         }
