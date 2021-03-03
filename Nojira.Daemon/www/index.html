@@ -33,7 +33,7 @@
 				function clickBtn() {
 					var query = document.getElementById('queryField').value;
 					if (query != '')
-						window.location.href = window.location.origin + "/q/" + query.replace(' ','');
+						window.location.href = window.location.origin + "/q/" + query.replaceAll(' ','');
 					else
 						window.location.href = window.location.origin;
 				}
