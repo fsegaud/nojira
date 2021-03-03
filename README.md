@@ -51,6 +51,17 @@ BaseUri/log/{machine}/{type}/{project}/{tag}/{message*}
 The web interface is accessible at `BaseUri` (by default: http://localhost:1410/).
 ![web interface screenshot](README.md.files/web.png)
 
+#### Query
+
+The web interface offer the possibility to query logs based on specific conditions. 
+```
+key:value0[,value1,...][;key:value0[,value1,...];...]
+```
+Here is an example :
+```
+project:nojira;tag:client,test;type:info,warning,error
+```
+
 ## Nojira.Client
 
 This is the C# client that send the HTTP requests.

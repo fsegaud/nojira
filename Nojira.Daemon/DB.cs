@@ -47,6 +47,11 @@ namespace Nojira.Daemon
             return DB.connection.Query<Log>("SELECT * FROM Log;");
         }
 
+        public static System.Collections.Generic.IEnumerable<Log> SelectLog(string query)
+        {
+            return DB.connection.Query<Log>(query);
+        }
+
         public static System.Collections.Generic.IEnumerable<Log> SelectLogByMachine(string machineName)
         {
             return DB.connection.Query<Log>($"SELECT * FROM Log WHERE MachineName = '{DB.Escape(machineName)}';");

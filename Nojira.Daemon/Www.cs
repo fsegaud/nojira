@@ -46,12 +46,14 @@ namespace Nojira.Daemon
             return true;
         }
 
-        public static string Index(string content = null)
+        public static string Index(string content = null, string query = null, string error = null)
         {
             return Www.index
                 .Replace("$Title", Config.Title)
                 .Replace("$Version", Program.Version)
-                .Replace("$Content", content ?? string.Empty);
+                .Replace("$Content", content ?? string.Empty)
+                .Replace("$Query", query ?? string.Empty)
+                .Replace("$Error", error != null ? $"<div id=\"error\">{error}</div>" : string.Empty);
         }
 
         public static string FormatArray(System.Collections.Generic.IEnumerable<DB.Log> logs)
