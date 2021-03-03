@@ -88,21 +88,7 @@ namespace Nojira.Daemon
 
             foreach (DB.Log log in logs)
             {
-                string color = "#000000";
-                switch (log.Type)
-                {
-                    case "info":
-                        color = "#008000";
-                        break;
-                    case "warning":
-                        color = "#ff8000";
-                        break;
-                    case "error":
-                        color = "#ff0000";
-                        break;
-                }
-
-                sb.AppendLine($"<tr><td>{log.Timestamp}</td><td>{log.MachineName}</td><td style=\"color:{color};\">{log.Type}</td><td>{log.Project}</td><td>{log.Tag}</td><td>{log.Message}</td></tr>");
+                sb.AppendLine($"<tr><td>{log.Timestamp}</td><td>{log.MachineName}</td><td class=\"{log.Type}\">{log.Type}</td><td>{log.Project}</td><td>{log.Tag}</td><td>{log.Message}</td></tr>");
             }
 
             sb.AppendLine("</table>");
