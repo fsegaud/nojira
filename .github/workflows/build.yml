@@ -6,7 +6,7 @@ on:
       - backup/*
       
 jobs:
-  build-nojira-daemon:
+  build-nojira-server:
 
     runs-on:  windows-latest
 
@@ -23,7 +23,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build Nojira.Daemon/Nojira.Daemon.csproj --no-restore --configuration Release
+      run: dotnet build Nojira.Server/Nojira.Server.csproj --no-restore --configuration Release
       
   build-nojira-client:
 
