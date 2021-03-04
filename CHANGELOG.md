@@ -8,6 +8,7 @@
 - [server] Renamed `Nojira.Daemon` to `Nojira.Server` (namespace, binaries, directories, vs files).
 - [server] Changed message maximum length to 1024 instead of 256 characters.
 - [server] Default listen port is no `80` instead of `1410`.
+- [server] Changed filter query key-value separator from `:` to `=`.
 - [global] Renamed Visual Studio project files, diretories and binary names to match standard .Net nomenclature.
 - [global] Updated assemblies info.
 

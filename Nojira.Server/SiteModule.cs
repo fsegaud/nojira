@@ -25,9 +25,9 @@ namespace Nojira.Server
     public sealed class SiteModule : Nancy.NancyModule
     {
         private const char ConditionSeparator = ';';
-        private const char KeySeparator = ':';
+        private const char KeySeparator = '=';
         private const char ValueSeparator = ',';
-        private const string ConditionRegex = @"^\w+:[A-Za-z0-9-._]+(,[A-Za-z0-9-._]+)*$";
+        private const string ConditionRegex = @"^\w+=[A-Za-z0-9-._]+(,[A-Za-z0-9-._]+)*$";
         private static readonly string[] AllowedKeys = { "project", "tag", "type", "machinename" };
 
         public SiteModule()
