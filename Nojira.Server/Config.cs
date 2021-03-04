@@ -32,7 +32,7 @@ namespace Nojira.Server
 
         public static string Title => Config.userConfig != null ? Config.userConfig.Title : "Nojira Server";
 
-        public static string BaseUri => Config.userConfig != null ? Config.userConfig.BaseUri : "http://localhost:1410";
+        public static string BaseUri => Config.userConfig != null ? Config.userConfig.BaseUri : "http://localhost:80";
 
         public static int MaxConnections => Config.userConfig != null ? Config.userConfig.MaxConnections : 16;
 

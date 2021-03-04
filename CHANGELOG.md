@@ -5,8 +5,9 @@
 - [server] Added an icon to the .exe file.
 - [server] Added a query system to filter logs.
 ### Changed
-- [server] Changed message maximum length to 1024 instead of 256 characters.
 - [server] Renamed `Nojira.Daemon` to `Nojira.Server` (namespace, binaries, directories, vs files).
+- [server] Changed message maximum length to 1024 instead of 256 characters.
+- [server] Default listen port is no `80` instead of `1410`.
 - [global] Renamed Visual Studio project files, diretories and binary names to match standard .Net nomenclature.
 - [global] Updated assemblies info.
 
