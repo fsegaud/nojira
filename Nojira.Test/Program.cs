@@ -24,7 +24,7 @@ namespace Nojira.Test
     {
         public static void Main(string[] args)
         {
-            Nojira.Client.NojiraClient.Uri = "http://localhost:1410";
+            Nojira.Client.NojiraClient.Uri = "http://localhost:80";
             Nojira.Client.NojiraClient.Project = "nojira";
 
             Nojira.Client.NojiraClient.LogInfo("test", "test of an info message.");
