@@ -19,7 +19,7 @@ Configuration can be done by editing the _config.json_ file.
 ```json
 {
   "Title": "Nojira Server",
-  "BaseUri": "http://localhost:1410",
+  "BaseUri": "http://localhost:80",
   "MaxConnections": 16,
   "DatabasePath": "logs.db",
   "DatabasePrevPath": "logs-prev.db"
@@ -34,10 +34,10 @@ CREATE TABLE "Log" (
 "Id" integer primary key autoincrement not null ,
 "Timestamp" bigint ,
 "MachineName" varchar(32) ,
-"Type" varchar(16) ,
+"Type" varchar(32) ,
 "Project" varchar(32) ,
-"Tag" varchar(64) ,
-"Message" varchar(256) )
+"Tag" varchar(32) ,
+"Message" varchar(1024) )
 ```
 
 ### API
@@ -48,18 +48,18 @@ BaseUri/log/{machine}/{type}/{project}/{tag}/{message*}
 
 ### Web interface
 
-The web interface is accessible at `BaseUri` (by default: http://localhost:1410/).
+The web interface is accessible at `BaseUri` (by default: http://localhost/).
 ![web interface screenshot](README.md.files/web.png)
 
 #### Query
 
 The web interface offer the possibility to query logs based on specific conditions. 
 ```
-key:value0[,value1,...][;key:value0[,value1,...];...]
+key=value0[,value1,...][;key=value0[,value1,...];...]
 ```
 Here is an example :
 ```
-project:nojira;tag:client,test;type:info,warning,error
+project=nojira; tag=client,test; type=info,warning,error
 ```
 
 ## Nojira.Client
@@ -67,7 +67,7 @@ project:nojira;tag:client,test;type:info,warning,error
 This is the C# client that send the HTTP requests.
 ```csharp
 // Setup.
-NojiraClient.Uri = "http://localhost:1410";
+NojiraClient.Uri = "http://localhost:80";
 NojiraClient.Project = "nojira";
 
 // Logs.
@@ -78,4 +78,4 @@ NojiraClient.LogError("test", "test of an error message.");
 
 ## Nojira.Test
 
-A simple test program that makes use of the `nojira-client` to send request to the `nojira-daemon`.
+A simple test program that makes use of the `Nojira.Client` to send request to the `Nojira.Server`.

@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased - ????-??-??
+## v0.4-dev - 2021-03-04
 ### Added
 - [server] Added an icon to the .exe file.
 - [server] Added a query system to filter logs.

@@ -22,7 +22,7 @@ namespace Nojira.Server
 {
     public class Program
     {
-        public const string Version = "v0.3-dev";
+        public const string Version = "v0.4-dev";
 
         public static void Main(string[] args)
         {
