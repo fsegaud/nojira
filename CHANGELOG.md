@@ -5,6 +5,7 @@
 - [daemon] Added an icon to the .exe file.
 - [daemon] Added a query system to filter logs.
 ### Changed
+- [daemon] Changed message maximum length to 1024 instead of 256 characters.
 - [global] Updated assemblies info.
 - [global] Renamed Visual Studio project files, diretories and binary names to match standard .Net nomenclature.
 

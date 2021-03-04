@@ -124,7 +124,7 @@ namespace Nojira.Daemon
                 set;
             }
 
-            [SQLite.MaxLength(16)]
+            [SQLite.MaxLength(32)]
             public string Type
             {
                 get;
@@ -138,14 +138,14 @@ namespace Nojira.Daemon
                 set;
             }
 
-            [SQLite.MaxLength(64)]
+            [SQLite.MaxLength(32)]
             public string Tag
             {
                 get;
                 set;
             }
 
-            [SQLite.MaxLength(256)]
+            [SQLite.MaxLength(1024)]
             public string Message
             {
                 get;
