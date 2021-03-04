@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Nojira.Daemon")]
+[assembly: AssemblyTitle("Nojira.Server")]
 [assembly: AssemblyDescription("Remote Logging")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("François Ségaud")]
-[assembly: AssemblyProduct("Nojira.Daemon")]
+[assembly: AssemblyProduct("Nojira.Server")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-namespace Nojira.Daemon
+namespace Nojira.Server
 {
     public static class Config
     {
@@ -30,7 +30,7 @@ namespace Nojira.Daemon
 
         private static UserConfig userConfig = null;
 
-        public static string Title => Config.userConfig != null ? Config.userConfig.Title : "nojira-" + Program.Version;
+        public static string Title => Config.userConfig != null ? Config.userConfig.Title : "Nojira Server";
 
         public static string BaseUri => Config.userConfig != null ? Config.userConfig.BaseUri : "http://localhost:1410";
 

@@ -7,7 +7,7 @@ Nojira is a software suite that allows remote logging.
 
 It relies on .NET 4.6.1, and includes packages _NancyFX_, _SQLite-net_, _Newtonsoft.Json_ and their respective dependences.
 
-## Nojira.Daemon
+## Nojira.Server
 
 This is the process that will serve API request and web interface requests.
 
@@ -18,7 +18,7 @@ Log data are stored in a local SQLite database.
 Configuration can be done by editing the _config.json_ file.
 ```json
 {
-  "Title": "nojira-v0.3-dev",
+  "Title": "Nojira Server",
   "BaseUri": "http://localhost:1410",
   "MaxConnections": 16,
   "DatabasePath": "logs.db",

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.539
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nojira.Daemon", "Nojira.Daemon\Nojira.Daemon.csproj", "{851535CD-F193-4F9E-AAEA-6767EE102824}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nojira.Server", "Nojira.Server\Nojira.Server.csproj", "{851535CD-F193-4F9E-AAEA-6767EE102824}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nojira.Client", "Nojira.Client\Nojira.Client.csproj", "{834FC806-3681-40A2-AB26-942D6CE4B4FC}"
 EndProject
