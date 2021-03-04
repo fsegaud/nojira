@@ -6,7 +6,7 @@ on:
       - backup/*
       
 jobs:
-  stylecop-nojira-all:
+  stylecop:
 
     runs-on:  windows-latest
 
