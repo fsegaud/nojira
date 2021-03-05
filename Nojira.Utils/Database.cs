@@ -26,11 +26,11 @@ namespace Nojira.Utils
     {
         private static SQLite.SQLiteConnection connection;
 
-        public static void Connect(string dbPath, string sbBackupPath = null)
+        public static void Connect(string dbPath, string dbBackupPath = null)
         {
-            if (!string.IsNullOrEmpty(sbBackupPath) && System.IO.File.Exists(dbPath))
+            if (!string.IsNullOrEmpty(dbBackupPath) && System.IO.File.Exists(dbPath))
             {
-                System.IO.File.Copy(dbPath, sbBackupPath, true);
+                System.IO.File.Copy(dbPath, dbBackupPath, true);
             }
 
             Database.connection = new SQLite.SQLiteConnection(dbPath);

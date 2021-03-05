@@ -1,7 +1,22 @@
-﻿using System.Linq;
+﻿// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 namespace Nojira.Admin
 {
+    using System.Linq;
+
     public class Program
     {
         private const string Help = "Nojira.Admin\n" +
@@ -83,7 +98,6 @@ namespace Nojira.Admin
                 System.Console.WriteLine(Program.Help);
             }
 
-
             while (actions.Count > 0)
             {
                 AdminAction action = actions.Dequeue();
@@ -93,128 +107,6 @@ namespace Nojira.Admin
                     System.Console.WriteLine(action.Status);
                 }
             }
-        }
-    }
-
-    public abstract class AdminAction
-    {
-        public string Status
-        {
-            get;
-            protected set;
-        }
-
-        public abstract bool Execute();
-    }
-
-    public class ListUserAction : AdminAction
-    {
-        public override bool Execute()
-        {
-            Nojira.Utils.Database.Connect(Nojira.Utils.Config.DatabasePath, Nojira.Utils.Config.DatabasePrevPath);
-
-            foreach (Nojira.Utils.Database.User user in Nojira.Utils.Database.GetAllUsers())
-            {
-                this.Status += $"{user.UserName}\n";
-            }
-
-            if (this.Status != null)
-            {
-                this.Status = this.Status.TrimEnd('\n');
-            }
-            else
-            {
-                this.Status = "No user found.";
-            }
-
-            Nojira.Utils.Database.Disconnect();
-
-            return true;
-        }
-    }
-
-    public class AddUserAction : AdminAction
-    {
-        private readonly string username;
-        private readonly string password;
-
-        public AddUserAction(string username, string password)
-        {
-            this.username = username;
-            this.password = password;
-        }
-
-        public override bool Execute()
-        {
-            Nojira.Utils.Database.Connect(Nojira.Utils.Config.DatabasePath, Nojira.Utils.Config.DatabasePrevPath);
-
-            bool result = true;
-            if (Nojira.Utils.Database.GetUser(this.username) == null)
-            {
-                if (Nojira.Utils.Database.CreateUser(new Nojira.Utils.Database.User(this.username, this.password)))
-                {
-                    this.Status = $"Added user '{this.username}'.";
-                    result = true;
-                }
-                else
-                {
-                    this.Status = $"Failed to add user '{this.username}'.";
-                    result = false;
-                }
-            }
-            else
-            {
-                this.Status = $"User '{this.username}' already exists.";
-                result = false;
-            }
-
-            Nojira.Utils.Database.Disconnect();
-            return result;
-        }
-    }
-
-    public class DeleteUserAction : AdminAction
-    {
-        private readonly string username;
-
-        public DeleteUserAction(string username)
-        {
-            this.username = username;
-        }
-
-        public override bool Execute()
-        {
-            Nojira.Utils.Database.Connect(Nojira.Utils.Config.DatabasePath, Nojira.Utils.Config.DatabasePrevPath);
-
-            bool result = true;
-            if (Nojira.Utils.Database.GetUser(this.username) != null)
-            {
-                Nojira.Utils.Database.DeleteUser(this.username);
-
-                this.Status = $"Deleted user '{this.username}'.";
-                result = true;
-            }
-            else
-            {
-                this.Status = $"User '{this.username}' does not exist exists.";
-                result = false;
-            }
-
-            Nojira.Utils.Database.Disconnect();
-            return result;
-        }
-    }
-
-    public class ClearLogsAction : AdminAction
-    {
-        public override bool Execute()
-        {
-            Nojira.Utils.Database.Connect(Nojira.Utils.Config.DatabasePath, Nojira.Utils.Config.DatabasePrevPath);
-            Nojira.Utils.Database.ClearAllLogs();
-            Nojira.Utils.Database.Disconnect();
-
-            this.Status = $"Logs cleared.";
-            return true;
         }
     }
 }
