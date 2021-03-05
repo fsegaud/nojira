@@ -44,7 +44,7 @@ namespace Nojira.Server
                     ContentType = "text/html",
                     Contents = stream =>
                     {
-                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(DB.SelectLog())));
+                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(Nojira.Utils.Database.GetAllLogs())));
                         stream.Write(bytes, 0, bytes.Length);
                     }
                 };
@@ -59,7 +59,7 @@ namespace Nojira.Server
                         ContentType = "text/html",
                         Contents = stream =>
                         {
-                            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(DB.SelectLogByMachine(args.machine))));
+                            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(Nojira.Utils.Database.GetLogsPerMachine(args.machine))));
                             stream.Write(bytes, 0, bytes.Length);
                         }
                     };
@@ -74,7 +74,7 @@ namespace Nojira.Server
                     ContentType = "text/html",
                     Contents = stream =>
                     {
-                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(DB.SelectLogByProject(args.project))));
+                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(Nojira.Utils.Database.GetLogsPerProject(args.project))));
                         stream.Write(bytes, 0, bytes.Length);
                     }
                 };
@@ -89,7 +89,7 @@ namespace Nojira.Server
                     ContentType = "text/html",
                     Contents = stream =>
                     {
-                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(DB.SelectLogBtProjectAndTag(args.project, args.tag))));
+                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(Nojira.Utils.Database.GetLogsPerProjectAndTag(args.project, args.tag))));
                         stream.Write(bytes, 0, bytes.Length);
                     }
                 };
@@ -111,7 +111,7 @@ namespace Nojira.Server
             });
         }
 
-        private System.Collections.Generic.IEnumerable<DB.Log> CustomQuery(string userQuery, out string error)
+        private System.Collections.Generic.IEnumerable<Nojira.Utils.Database.Log> CustomQuery(string userQuery, out string error)
         {
             string queryCondition = string.Empty;
             userQuery = userQuery.Replace(" ", string.Empty);
@@ -127,7 +127,7 @@ namespace Nojira.Server
                 if (!System.Text.RegularExpressions.Regex.IsMatch(condition, SiteModule.ConditionRegex))
                 {
                     error = $"Syntax error on '{condition}'";
-                    return DB.SelectLog();
+                    return Nojira.Utils.Database.GetAllLogs();
                 }
 
                 string[] tokens = condition.Split(SiteModule.KeySeparator);
@@ -135,7 +135,7 @@ namespace Nojira.Server
                 if (!SiteModule.AllowedKeys.Contains(key.ToLower()))
                 {
                     error = $"Syntax error on '{condition}', parameter '{key}' is not allowed.";
-                    return DB.SelectLog();
+                    return Nojira.Utils.Database.GetAllLogs();
                 }
 
                 string[] values = tokens[1].Split(SiteModule.ValueSeparator);
@@ -151,7 +151,7 @@ namespace Nojira.Server
             string sqlQuery = $"SELECT * FROM Log {queryCondition};";
 
             error = null;
-            return DB.SelectLog(sqlQuery);
+            return Nojira.Utils.Database.QueryLogs(sqlQuery);
         }
     }
 }

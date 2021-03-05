@@ -24,7 +24,7 @@ namespace Nojira.Server
     {
         public System.Security.Claims.ClaimsPrincipal Validate(string username, string password)
         {
-            DB.User user = DB.SelectUser(username);
+            Nojira.Utils.Database.User user = Nojira.Utils.Database.GetUser(username);
             if (user != null && user.CheckPassword(password))
             {
                 return new System.Security.Claims.ClaimsPrincipal(new System.Security.Principal.GenericIdentity(username));
