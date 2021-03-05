@@ -6,6 +6,7 @@ namespace Nojira.Admin
     {
         private const string Help = "Nojira.Admin\n" +
                                     "\t-h --help\n" +
+                                    "\t-l --list-user" +
                                     "\t-a --add-user username password\n" +
                                     "\t-d --delete-user username\n" +
                                     "\t-c --clear-logs";
@@ -25,6 +26,14 @@ namespace Nojira.Admin
             {
                 switch (args[argIndex])
                 {
+                    case "-l":
+                    case "--list-user":
+                        {
+                            actions.Enqueue(new ListUserAction());
+                        }
+
+                        break;
+
                     case "-a":
                     case "--add-user":
                         {
@@ -68,7 +77,13 @@ namespace Nojira.Admin
                 }
             }
 
-            
+            if (actions.Count == 0)
+            {
+                System.Console.Error.WriteLine("Bad Arguments.");
+                System.Console.WriteLine(Program.Help);
+            }
+
+
             while (actions.Count > 0)
             {
                 AdminAction action = actions.Dequeue();
@@ -90,6 +105,32 @@ namespace Nojira.Admin
         }
 
         public abstract bool Execute();
+    }
+
+    public class ListUserAction : AdminAction
+    {
+        public override bool Execute()
+        {
+            Nojira.Utils.Database.Connect(Nojira.Utils.Config.DatabasePath, Nojira.Utils.Config.DatabasePrevPath);
+
+            foreach (Nojira.Utils.Database.User user in Nojira.Utils.Database.GetAllUsers())
+            {
+                this.Status += $"{user.UserName}\n";
+            }
+
+            if (this.Status != null)
+            {
+                this.Status = this.Status.TrimEnd('\n');
+            }
+            else
+            {
+                this.Status = "No user found.";
+            }
+
+            Nojira.Utils.Database.Disconnect();
+
+            return true;
+        }
     }
 
     public class AddUserAction : AdminAction
