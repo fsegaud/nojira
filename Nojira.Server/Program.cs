@@ -49,7 +49,7 @@ namespace Nojira.Server
                 return;
             }
 
-            DB.Init();
+            DB.Init(true);
 
             Nancy.Hosting.Self.HostConfiguration cfg = new Nancy.Hosting.Self.HostConfiguration();
             cfg.UrlReservations.CreateAutomatically = true;
