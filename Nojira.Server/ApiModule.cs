@@ -31,8 +31,8 @@ namespace Nojira.Server
                 {
                     string formattedLog = $"[{System.DateTime.Now}] <{args.type}> {args.project}.{args.tag}: {args.message}";
 
-                    DB.Log log = new DB.Log(System.DateTime.Now, args.machine, args.type, args.project, args.tag, args.message);
-                    DB.InsertLog(log);
+                    Nojira.Utils.Database.Log log = new Nojira.Utils.Database.Log(System.DateTime.Now, args.machine, args.type, args.project, args.tag, args.message);
+                    Nojira.Utils.Database.AddLog(log);
 
                     System.Console.WriteLine(formattedLog);
                     return "OK";

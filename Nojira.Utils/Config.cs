@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-namespace Nojira.Server
+namespace Nojira.Utils
 {
     public static class Config
     {
@@ -36,9 +36,9 @@ namespace Nojira.Server
 
         public static int MaxConnections => Config.userConfig != null ? Config.userConfig.MaxConnections : 16;
 
-        public static string DatabasePath => Config.userConfig != null ? Config.userConfig.DatabasePath : "logs.db";
+        public static string DatabasePath => Config.userConfig != null ? Config.userConfig.DatabasePath : "nojira.db";
 
-        public static string DatabasePrevPath => Config.userConfig != null ? Config.userConfig.DatabasePrevPath : "logs-prev.db";
+        public static string DatabasePrevPath => Config.userConfig != null ? Config.userConfig.DatabasePrevPath : "nojira-prev.db";
 
         public static void Load()
         {
