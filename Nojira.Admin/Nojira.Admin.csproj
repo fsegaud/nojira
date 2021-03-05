@@ -56,4 +56,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release xcopy /s /Q /Y "$(TargetDir)*" "$(SolutionDir)\.release\unreleased\"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
