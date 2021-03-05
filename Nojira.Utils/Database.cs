@@ -53,6 +53,11 @@ namespace Nojira.Utils
             return Database.connection.Insert(user) == 1;
         }
 
+        public static System.Collections.Generic.IEnumerable<User> GetAllUsers()
+        {
+            return Database.connection.Query<User>($"SELECT * FROM User;");
+        }
+
         public static User GetUser(string username)
         {
             return Database.connection.Query<User>($"SELECT * FROM User WHERE UserName = '{Database.Escape(username)}';").FirstOrDefault();
