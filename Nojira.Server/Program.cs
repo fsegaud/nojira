@@ -47,13 +47,14 @@ namespace Nojira.Server
             System.Console.WriteLine("___________________________________________________________________");
             System.Console.WriteLine(string.Empty);
 
-            Nojira.Utils.Database.Init();
+            System.Console.WriteLine($"Connecting to database '{Nojira.Utils.Config.DatabasePath}'...");
+            Nojira.Utils.Database.Connect(Nojira.Utils.Config.DatabasePath, Nojira.Utils.Config.DatabasePrevPath);
             if (Nojira.Utils.Database.CountUser() == 0)
             {
                 Nojira.Utils.Database.CreateUser(new Nojira.Utils.Database.User(Program.DefaultUsername, Program.DefaultPassword));
 
                 System.Console.WriteLine("##################################################################");
-                System.Console.WriteLine($"##     Created default user account ({Program.DefaultUsername}:{Program.DefaultPassword}).              ##");
+                System.Console.WriteLine($"##     Created default user account ({Program.DefaultUsername}:{Program.DefaultPassword}).            ##");
                 System.Console.WriteLine("##     Remember to create a proper one and remove this one.     ##");
                 System.Console.WriteLine("##################################################################");
             }
@@ -75,11 +76,19 @@ namespace Nojira.Server
                 System.Console.WriteLine("Done, done and done. Let's log! /o/");
                 System.Console.WriteLine("-------------------------------------------------------------------");
 
+                // TODO: 'q' to quit.
                 while (true)
                 {
-                    System.Threading.Thread.Sleep(1);
+                    System.ConsoleKeyInfo key = System.Console.ReadKey();
+                    if (key.KeyChar == 'q' || key.KeyChar == 'Q')
+                    {
+                        System.Console.WriteLine();
+                        break;
+                    }
                 }
             }
+
+            Nojira.Utils.Database.Disconnect();
         }
     }
 }
