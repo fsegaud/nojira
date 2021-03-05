@@ -43,6 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\AddUserAction.cs" />
+    <Compile Include="Actions\AdminAction.cs" />
+    <Compile Include="Actions\ClearLogsAction.cs" />
+    <Compile Include="Actions\DeleteUserAction.cs" />
+    <Compile Include="Actions\ListUserAction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -55,6 +60,7 @@
       <Name>Nojira.Utils</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release xcopy /s /Q /Y "$(TargetDir)*" "$(SolutionDir)\.release\unreleased\"</PostBuildEvent>
