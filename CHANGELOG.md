@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased - ????-??-??
+### Added
+- [server] The Nojira server now user basic authentication to let users access the web interface.
+- [admin] A new console application `Nojira.Admin` provides functions to manage users.
+- [utils] `Database` and `Config` now reside in their specific assembly: `Nojira.Utils`.
+- [utils] Added functions to manager users and hash passwords.
+### Changed
+- [server] Hitting que q key will qui the application.
+- [global] All release files are now copied to the _.release/unreleased_ directory as a post-build step.
+
 ## v0.4-dev - 2021-03-04
 ### Added
 - [server] Added an icon to the .exe file.
