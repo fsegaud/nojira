@@ -21,6 +21,7 @@
 namespace Nojira.Server
 {
     using System.Linq;
+    using Nancy.Security;
 
     public sealed class SiteModule : Nancy.NancyModule
     {
@@ -32,6 +33,8 @@ namespace Nojira.Server
 
         public SiteModule()
         {
+            this.RequiresAuthentication();
+
             this.Get(
                 "/", 
                 args =>

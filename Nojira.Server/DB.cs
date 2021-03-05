@@ -20,11 +20,16 @@
 
 namespace Nojira.Server
 {
+    using System.Linq;
+
     public static class DB
     {
+        private const string DefaultUsername = "admin";
+        private const string DefaultPassword = "admin";
+
         private static SQLite.SQLiteConnection connection;
 
-        public static void Init()
+        public static void Init(bool createDefaultUser)
         {
             if (System.IO.File.Exists(Config.DatabasePath))
             {
@@ -34,12 +39,43 @@ namespace Nojira.Server
             System.Console.WriteLine($"Connecting to database '{Config.DatabasePath}'...");
 
             DB.connection = new SQLite.SQLiteConnection(Config.DatabasePath);
+            DB.connection.CreateTable<User>();
             DB.connection.CreateTable<Log>();
+
+            if (createDefaultUser && DB.CountUser() == 0)
+            {
+                DB.TryInsertUser(new User(DB.DefaultUsername, DB.DefaultPassword));
+
+                System.Console.WriteLine("##################################################################");
+                System.Console.WriteLine($"##     Created default user account ({DB.DefaultUsername}:{DB.DefaultPassword}).              ##");
+                System.Console.WriteLine("##     Remember to create a proper one and remove this one.     ##");
+                System.Console.WriteLine("##################################################################");
+            }
+        }
+
+        public static bool TryInsertUser(User user)
+        {
+            if (DB.SelectUser(user.UserName) != null)
+            {
+                return false;
+            }
+
+            return DB.connection.Insert(user) == 1;
         }
 
         public static void InsertLog(Log log)
         {
             DB.connection.Insert(log);
+        }
+
+        public static User SelectUser(string username)
+        {
+            return DB.connection.Query<User>($"SELECT * FROM User WHERE UserName = '{DB.Escape(username)}';").FirstOrDefault();
+        }
+
+        public static int CountUser()
+        {
+            return DB.connection.ExecuteScalar<int>($"SELECT COUNT(Id) FROM User;");
         }
 
         public static System.Collections.Generic.IEnumerable<Log> SelectLog()
@@ -85,6 +121,73 @@ namespace Nojira.Server
         private static string Escape(string str)
         {
             return str.Replace("'", "''");
+        }
+
+        [SQLite.Table("User")]
+        public class User
+        {
+            public User()
+            {
+            }
+
+            public User(string userName, string password)
+            {
+                this.UserName = userName;
+
+                byte[] salt;
+                new System.Security.Cryptography.RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+
+                System.Security.Cryptography.Rfc2898DeriveBytes pbkdf2 = new System.Security.Cryptography.Rfc2898DeriveBytes(password, salt, 10000);
+                byte[] hash = pbkdf2.GetBytes(20);
+
+                byte[] hashBytes = new byte[36];
+                System.Array.Copy(salt, 0, hashBytes, 0, 16);
+                System.Array.Copy(hash, 0, hashBytes, 16, 20);
+
+                this.PasswordHash = System.Convert.ToBase64String(hashBytes);
+            }
+
+            [SQLite.PrimaryKey, SQLite.AutoIncrement]
+            public int Id
+            {
+                get;
+                set;
+            }
+
+            [SQLite.MaxLength(64)]
+            public string UserName
+            {
+                get;
+                set;
+            }
+
+            [SQLite.MaxLength(48)]
+            public string PasswordHash
+            {
+                get;
+                set;
+            }
+
+            public bool CheckPassword(string password)
+            {
+                byte[] hashBytes = System.Convert.FromBase64String(this.PasswordHash);
+
+                byte[] salt = new byte[16];
+                System.Array.Copy(hashBytes, 0, salt, 0, 16);
+
+                System.Security.Cryptography.Rfc2898DeriveBytes pbkdf2 = new System.Security.Cryptography.Rfc2898DeriveBytes(password, salt, 10000);
+                byte[] hash = pbkdf2.GetBytes(20);
+
+                for (int i = 0; i < 20; ++i)
+                {
+                    if (hashBytes[i + 16] != hash[i])
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
         }
 
         [SQLite.Table("Log")]
