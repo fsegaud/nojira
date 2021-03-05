@@ -26,18 +26,21 @@ namespace Nojira.Utils
     {
         private static SQLite.SQLiteConnection connection;
 
-        public static void Init()
+        public static void Connect(string dbPath, string sbBackupPath = null)
         {
-            if (System.IO.File.Exists(Config.DatabasePath))
+            if (!string.IsNullOrEmpty(sbBackupPath) && System.IO.File.Exists(dbPath))
             {
-                System.IO.File.Copy(Config.DatabasePath, Config.DatabasePrevPath, true);
+                System.IO.File.Copy(dbPath, sbBackupPath, true);
             }
 
-            System.Console.WriteLine($"Connecting to database '{Config.DatabasePath}'...");
-
-            Database.connection = new SQLite.SQLiteConnection(Config.DatabasePath);
+            Database.connection = new SQLite.SQLiteConnection(dbPath);
             Database.connection.CreateTable<User>();
             Database.connection.CreateTable<Log>();
+        }
+
+        public static void Disconnect()
+        {
+            Database.connection.Close();
         }
 
         public static bool CreateUser(User user)
@@ -58,6 +61,11 @@ namespace Nojira.Utils
         public static int CountUser()
         {
             return Database.connection.ExecuteScalar<int>($"SELECT COUNT(Id) FROM User;");
+        }
+
+        public static void DeleteUser(string username)
+        {
+            Database.connection.ExecuteScalar<int>($"DELETE FROM User WHERE Username = '{Database.Escape(username)}';");
         }
 
         public static void AddLog(Log log)
@@ -103,6 +111,11 @@ namespace Nojira.Utils
         public static System.Collections.Generic.IEnumerable<Log> GetTags()
         {
             return Database.connection.Query<Log>($"SELECT DISTINCT Project, Tag FROM Log;");
+        }
+
+        public static void ClearAllLogs()
+        {
+            Database.connection.ExecuteScalar<int>($"DELETE FROM Log;");
         }
 
         private static string Escape(string str)
