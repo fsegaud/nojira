@@ -49,7 +49,7 @@ namespace Nojira.Server
         public static string Index(string content = null, string query = null, string error = null)
         {
             return Www.index
-                .Replace("$Title", Config.Title)
+                .Replace("$Title", Nojira.Utils.Config.Title)
                 .Replace("$Shortcuts", Www.FormatLinks())
                 .Replace("$Query", query ?? string.Empty)
                 .Replace("$Error", error != null ? $"<div id=\"error\">{error}</div>" : string.Empty)
@@ -57,14 +57,14 @@ namespace Nojira.Server
                 .Replace("$Version", Program.Version);
         }
 
-        public static string FormatArray(System.Collections.Generic.IEnumerable<DB.Log> logs)
+        public static string FormatArray(System.Collections.Generic.IEnumerable<Nojira.Utils.Database.Log> logs)
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
             sb.AppendLine("<table class=\"logs\">");
             sb.AppendLine($"<thead><tr><td>Timestamp</td><td>Machine</td><td>Type</td><td>Project</td><td>Tag</td><td>Message</td></tr></thead>");
 
-            foreach (DB.Log log in logs)
+            foreach (Nojira.Utils.Database.Log log in logs)
             {
                 sb.AppendLine($"<tr><td style=\"min-width:150px;\">{log.Timestamp}</td>" +
                               $"<td style=\"min-width:150px;\">{log.MachineName}</td>" +
@@ -86,21 +86,21 @@ namespace Nojira.Server
 
             sb.AppendLine($"<a href=\"/\" class=\"shortcut\">*</a> ");
 
-            foreach (DB.Log log in DB.SelectProject())
+            foreach (Nojira.Utils.Database.Log log in Nojira.Utils.Database.GetProjects())
             {
                 sb.AppendLine($"<a href=\"/project/{log.Project}\" class=\"shortcut\">{log.Project}</a> ");
             }
 
             sb.AppendLine("</td></tr><tr><td><b>Tags</b></td><td>");
 
-            foreach (DB.Log log in DB.SelectProjectTag())
+            foreach (Nojira.Utils.Database.Log log in Nojira.Utils.Database.GetTags())
             {
                 sb.AppendLine($"<a href=\"/project/{log.Project}/{log.Tag}\" class=\"shortcut\">{log.Project}/{log.Tag}</a> ");
             }
 
             sb.AppendLine("</td></tr><tr><td><b>Machines</b></td><td>");
 
-            foreach (DB.Log log in DB.SelectMachineName())
+            foreach (Nojira.Utils.Database.Log log in Nojira.Utils.Database.GetMachineNames())
             {
                 sb.AppendLine($"<a href=\"/machine/{log.MachineName}\" class=\"shortcut\">{log.MachineName}</a> ");
             }

@@ -18,18 +18,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-namespace Nojira.Server
+namespace Nojira.Utils
 {
     using System.Linq;
 
-    public static class DB
+    public static class Database
     {
-        private const string DefaultUsername = "admin";
-        private const string DefaultPassword = "admin";
-
         private static SQLite.SQLiteConnection connection;
 
-        public static void Init(bool createDefaultUser)
+        public static void Init()
         {
             if (System.IO.File.Exists(Config.DatabasePath))
             {
@@ -38,84 +35,74 @@ namespace Nojira.Server
 
             System.Console.WriteLine($"Connecting to database '{Config.DatabasePath}'...");
 
-            DB.connection = new SQLite.SQLiteConnection(Config.DatabasePath);
-            DB.connection.CreateTable<User>();
-            DB.connection.CreateTable<Log>();
-
-            if (createDefaultUser && DB.CountUser() == 0)
-            {
-                DB.TryInsertUser(new User(DB.DefaultUsername, DB.DefaultPassword));
-
-                System.Console.WriteLine("##################################################################");
-                System.Console.WriteLine($"##     Created default user account ({DB.DefaultUsername}:{DB.DefaultPassword}).              ##");
-                System.Console.WriteLine("##     Remember to create a proper one and remove this one.     ##");
-                System.Console.WriteLine("##################################################################");
-            }
+            Database.connection = new SQLite.SQLiteConnection(Config.DatabasePath);
+            Database.connection.CreateTable<User>();
+            Database.connection.CreateTable<Log>();
         }
 
-        public static bool TryInsertUser(User user)
+        public static bool CreateUser(User user)
         {
-            if (DB.SelectUser(user.UserName) != null)
+            if (Database.GetUser(user.UserName) != null)
             {
                 return false;
             }
 
-            return DB.connection.Insert(user) == 1;
+            return Database.connection.Insert(user) == 1;
         }
 
-        public static void InsertLog(Log log)
+        public static User GetUser(string username)
         {
-            DB.connection.Insert(log);
-        }
-
-        public static User SelectUser(string username)
-        {
-            return DB.connection.Query<User>($"SELECT * FROM User WHERE UserName = '{DB.Escape(username)}';").FirstOrDefault();
+            return Database.connection.Query<User>($"SELECT * FROM User WHERE UserName = '{Database.Escape(username)}';").FirstOrDefault();
         }
 
         public static int CountUser()
         {
-            return DB.connection.ExecuteScalar<int>($"SELECT COUNT(Id) FROM User;");
+            return Database.connection.ExecuteScalar<int>($"SELECT COUNT(Id) FROM User;");
         }
 
-        public static System.Collections.Generic.IEnumerable<Log> SelectLog()
+        public static void AddLog(Log log)
         {
-            return DB.connection.Query<Log>("SELECT * FROM Log;");
+            Database.connection.Insert(log);
         }
 
-        public static System.Collections.Generic.IEnumerable<Log> SelectLog(string query)
+        public static System.Collections.Generic.IEnumerable<Log> QueryLogs(string query)
         {
-            return DB.connection.Query<Log>(query);
+            return Database.connection.Query<Log>(query);
         }
 
-        public static System.Collections.Generic.IEnumerable<Log> SelectLogByMachine(string machineName)
+        public static System.Collections.Generic.IEnumerable<Log> GetAllLogs()
         {
-            return DB.connection.Query<Log>($"SELECT * FROM Log WHERE MachineName = '{DB.Escape(machineName)}';");
+            return Database.connection.Query<Log>("SELECT * FROM Log;");
         }
 
-        public static System.Collections.Generic.IEnumerable<Log> SelectLogByProject(string project)
+        public static System.Collections.Generic.IEnumerable<Log> GetLogsPerMachine(string machineName)
         {
-            return DB.connection.Query<Log>($"SELECT * FROM Log WHERE Project = '{DB.Escape(project)}';");
+            return Database.connection.Query<Log>($"SELECT * FROM Log WHERE MachineName = '{Database.Escape(machineName)}';");
         }
 
-        public static System.Collections.Generic.IEnumerable<Log> SelectLogBtProjectAndTag(string project, string tag)
+        public static System.Collections.Generic.IEnumerable<Log> GetLogsPerProject(string project)
         {
-            return DB.connection.Query<Log>($"SELECT * FROM Log WHERE Project = '{DB.Escape(project)}' AND Tag = '{DB.Escape(tag)}';");
+            return Database.connection.Query<Log>($"SELECT * FROM Log WHERE Project = '{Database.Escape(project)}';");
         }
 
-        public static System.Collections.Generic.IEnumerable<Log> SelectMachineName()
+        public static System.Collections.Generic.IEnumerable<Log> GetLogsPerProjectAndTag(string project, string tag)
         {
-            return DB.connection.Query<Log>($"SELECT DISTINCT MachineName FROM Log;");
+            return Database.connection.Query<Log>($"SELECT * FROM Log WHERE Project = '{Database.Escape(project)}' AND Tag = '{Database.Escape(tag)}';");
         }
 
-        public static System.Collections.Generic.IEnumerable<Log> SelectProject()
+        public static System.Collections.Generic.IEnumerable<Log> GetMachineNames()
         {
-            return DB.connection.Query<Log>($"SELECT DISTINCT Project FROM Log;");
+            return Database.connection.Query<Log>($"SELECT DISTINCT MachineName FROM Log;");
         }
 
-        public static System.Collections.Generic.IEnumerable<Log> SelectProjectTag()
+        public static System.Collections.Generic.IEnumerable<Log> GetProjects()
         {
-            return DB.connection.Query<Log>($"SELECT DISTINCT Project, Tag FROM Log;");
+            return Database.connection.Query<Log>($"SELECT DISTINCT Project FROM Log;");
+        }
+
+        public static System.Collections.Generic.IEnumerable<Log> GetTags()
+        {
+            return Database.connection.Query<Log>($"SELECT DISTINCT Project, Tag FROM Log;");
         }
 
         private static string Escape(string str)
@@ -161,7 +148,7 @@ namespace Nojira.Server
                 set;
             }
 
-            [SQLite.MaxLength(48)]
+            [SQLite.MaxLength(64)]
             public string PasswordHash
             {
                 get;

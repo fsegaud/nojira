@@ -24,9 +24,12 @@ namespace Nojira.Server
     {
         public const string Version = "v0.4-dev";
 
+        private const string DefaultUsername = "nojira";
+        private const string DefaultPassword = "nojira";
+
         public static void Main(string[] args)
         {
-            Config.Load();
+            Nojira.Utils.Config.Load();
 
             System.Console.WriteLine("                                 gg   gg                         ");
             System.Console.WriteLine("                                 \"\"   \"\"                         ");
@@ -39,25 +42,34 @@ namespace Nojira.Server
             System.Console.WriteLine("                             ,dP'8I                              ");
             System.Console.WriteLine("                            ,8\"  8I                             ");
             System.Console.WriteLine($"                            I8   8I   {Program.Version,28}");
-            System.Console.WriteLine($"                            `8, ,8I   {Config.Title,28}");
-            System.Console.WriteLine($"                             `Y8P\"    {Config.BaseUri,28}");
+            System.Console.WriteLine($"                            `8, ,8I   {Nojira.Utils.Config.Title,28}");
+            System.Console.WriteLine($"                             `Y8P\"    {Nojira.Utils.Config.BaseUri,28}");
             System.Console.WriteLine("___________________________________________________________________");
             System.Console.WriteLine(string.Empty);
+
+            Nojira.Utils.Database.Init();
+            if (Nojira.Utils.Database.CountUser() == 0)
+            {
+                Nojira.Utils.Database.CreateUser(new Nojira.Utils.Database.User(Program.DefaultUsername, Program.DefaultPassword));
+
+                System.Console.WriteLine("##################################################################");
+                System.Console.WriteLine($"##     Created default user account ({Program.DefaultUsername}:{Program.DefaultPassword}).              ##");
+                System.Console.WriteLine("##     Remember to create a proper one and remove this one.     ##");
+                System.Console.WriteLine("##################################################################");
+            }
 
             if (!Www.Load())
             {
                 return;
             }
 
-            DB.Init(true);
-
             Nancy.Hosting.Self.HostConfiguration cfg = new Nancy.Hosting.Self.HostConfiguration();
             cfg.UrlReservations.CreateAutomatically = true;
-            cfg.MaximumConnectionCount = Config.MaxConnections;
+            cfg.MaximumConnectionCount = Nojira.Utils.Config.MaxConnections;
 
-            using (Nancy.Hosting.Self.NancyHost host = new Nancy.Hosting.Self.NancyHost(cfg, new System.Uri(Config.BaseUri)))
+            using (Nancy.Hosting.Self.NancyHost host = new Nancy.Hosting.Self.NancyHost(cfg, new System.Uri(Nojira.Utils.Config.BaseUri)))
             {
-                System.Console.WriteLine($"Listening on '{Config.BaseUri}'...");
+                System.Console.WriteLine($"Listening on '{Nojira.Utils.Config.BaseUri}'...");
                 host.Start();
 
                 System.Console.WriteLine("Done, done and done. Let's log! /o/");
