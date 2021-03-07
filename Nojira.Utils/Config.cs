@@ -22,11 +22,7 @@ namespace Nojira.Utils
 {
     public static class Config
     {
-#if DEBUG
-        private const string FilePath = "../../config.json";
-#else
         private const string FilePath = "config.json";
-#endif
 
         private static UserConfig userConfig = null;
 
