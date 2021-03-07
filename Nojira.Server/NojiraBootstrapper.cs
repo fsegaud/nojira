@@ -18,21 +18,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using Nancy;
-
 namespace Nojira.Server
 {
+    using Nancy;
     using Nancy.Authentication.Basic;
 
     public class NojiraBootstrapper : Nancy.DefaultNancyBootstrapper, IRootPathProvider
     {
+        protected override IRootPathProvider RootPathProvider => this;
+
         public override void Configure(Nancy.Configuration.INancyEnvironment environment)
         {
             base.Configure(environment);
             environment.Tracing(true, true);
         }
-
-        protected override IRootPathProvider RootPathProvider => this;
 
         public string GetRootPath()
         {
