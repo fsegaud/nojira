@@ -22,7 +22,7 @@ namespace Nojira.Server
 {
     public class Program
     {
-        public const string Version = "v0.4-dev";
+        public const string Version = "v0.5-dev";
 
         private const string DefaultUsername = "nojira";
         private const string DefaultPassword = "nojira";
