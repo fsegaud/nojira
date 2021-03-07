@@ -1,6 +1,3 @@
 # TODO
-- Support column sorting
-- Add daemon arguments
-  - --run
-  - --reset-db
-  - --reset-config
+- add auth/admin doc to README.md
+- add CI on push on main
