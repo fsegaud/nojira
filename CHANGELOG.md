@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased - ????-??-??
+## v0.5-dev - 2021-03-07
 ### Added
 - [server] The Nojira server now user basic authentication to let users access the web interface.
 - [admin] A new console application `Nojira.Admin` provides functions to manage users.
