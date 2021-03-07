@@ -81,6 +81,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release xcopy /s /Q /Y "$(TargetDir)*" "$(SolutionDir)\.release\unreleased\"</PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Release xcopy /s /Q /Y "$(TargetDir)*" "$(SolutionDir)\.release\unreleased\"
+if $(ConfigurationName) == Release xcopy /s /Q /Y "$(ProjectDir)Views\*" "$(SolutionDir)\.release\unreleased\Views\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

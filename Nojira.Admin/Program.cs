@@ -21,7 +21,7 @@ namespace Nojira.Admin
     {
         private const string Help = "Nojira.Admin\n" +
                                     "\t-h --help\n" +
-                                    "\t-l --list-user" +
+                                    "\t-l --list-users\n" +
                                     "\t-a --add-user username password\n" +
                                     "\t-d --delete-user username\n" +
                                     "\t-c --clear-logs";
@@ -67,7 +67,7 @@ namespace Nojira.Admin
                         break;
 
                     case "-d":
-                    case "--delete-user":
+                    case "--delete-users":
                         {
                             if (argIndex + 1 >= args.Length)
                             {
