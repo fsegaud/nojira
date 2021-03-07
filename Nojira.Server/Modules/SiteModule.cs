@@ -21,7 +21,6 @@
 namespace Nojira.Server
 {
     using System.Linq;
-    using Nancy.Security;
 
     public sealed class SiteModule : Nancy.NancyModule
     {
@@ -32,83 +31,17 @@ namespace Nojira.Server
         private static readonly string[] AllowedKeys = { "project", "tag", "type", "machinename" };
 
         public SiteModule()
+            : base("/")
         {
-            this.RequiresAuthentication();
+            this.Get("/", args => { return View["index", new IndexModel(Nojira.Utils.Database.GetAllLogs())]; });
+            
+            this.Get("/machine/{machine}", args => { return View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerMachine(args.machine))]; });
 
-            this.Get(
-                "/", 
-                args =>
-            {
-                return new Nancy.Response()
-                {
-                    ContentType = "text/html",
-                    Contents = stream =>
-                    {
-                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(Nojira.Utils.Database.GetAllLogs())));
-                        stream.Write(bytes, 0, bytes.Length);
-                    }
-                };
-            });
+            this.Get("/project/{project}", args => { return View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerProject(args.project))]; });
 
-            this.Get(
-                "/machine/{machine}",
-                args =>
-                {
-                    return new Nancy.Response()
-                    {
-                        ContentType = "text/html",
-                        Contents = stream =>
-                        {
-                            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(Nojira.Utils.Database.GetLogsPerMachine(args.machine))));
-                            stream.Write(bytes, 0, bytes.Length);
-                        }
-                    };
-                });
+            this.Get("/project/{project}/{tag}", args => { return View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerProjectAndTag(args.project, args.tag))]; });
 
-            this.Get(
-                "/project/{project}", 
-                args =>
-            {
-                return new Nancy.Response()
-                {
-                    ContentType = "text/html",
-                    Contents = stream =>
-                    {
-                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(Nojira.Utils.Database.GetLogsPerProject(args.project))));
-                        stream.Write(bytes, 0, bytes.Length);
-                    }
-                };
-            });
-
-            this.Get(
-                "/project/{project}/{tag}", 
-                args =>
-            {
-                return new Nancy.Response()
-                {
-                    ContentType = "text/html",
-                    Contents = stream =>
-                    {
-                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(Nojira.Utils.Database.GetLogsPerProjectAndTag(args.project, args.tag))));
-                        stream.Write(bytes, 0, bytes.Length);
-                    }
-                };
-            });
-
-            this.Get(
-                "/q/{query*}", 
-                args =>
-            {
-                return new Nancy.Response()
-                {
-                    ContentType = "text/html",
-                    Contents = stream =>
-                    {
-                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Www.Index(Www.FormatArray(this.CustomQuery(args.query, out string error)), args.query, error));
-                        stream.Write(bytes, 0, bytes.Length);
-                    }
-                };
-            });
+            this.Get("/q/{query*}", args => { return View["index", new IndexModel(this.CustomQuery(args.query, out string error), args.query, error)]; });
         }
 
         private System.Collections.Generic.IEnumerable<Nojira.Utils.Database.Log> CustomQuery(string userQuery, out string error)
