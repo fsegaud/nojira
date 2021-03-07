@@ -39,7 +39,7 @@ namespace Nojira.Server
 
         public string Title => Nojira.Utils.Config.Title;
 
-        public string Version = Program.Version;
+        public string Version => Program.Version;
 
         public System.Collections.Generic.IEnumerable<string> ProjectShortcuts => Nojira.Utils.Database.GetProjects().Select(p => p.Project);
 
