@@ -21,6 +21,7 @@
 namespace Nojira.Server
 {
     using System.Linq;
+    using Nancy.Security;
 
     public sealed class SiteModule : Nancy.NancyModule
     {
@@ -33,6 +34,8 @@ namespace Nojira.Server
         public SiteModule()
             : base("/")
         {
+            this.RequiresAuthentication();
+
             this.Get("/", args => { return View["index", new IndexModel(Nojira.Utils.Database.GetAllLogs())]; });
             
             this.Get("/machine/{machine}", args => { return View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerMachine(args.machine))]; });
