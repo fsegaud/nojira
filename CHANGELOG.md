@@ -7,6 +7,7 @@
 - [utils] `Database` and `Config` now reside in their specific assembly: `Nojira.Utils`.
 - [utils] Added functions to manager users and hash passwords.
 ### Changed
+- [server] The Nancy view/model system is now used to generate the html code instead of pasta string builders. See the _Nojira.Server/Views_ directory.
 - [server] Hitting que q key will qui the application.
 - [global] All release files are now copied to the _.release/unreleased_ directory as a post-build step.
 

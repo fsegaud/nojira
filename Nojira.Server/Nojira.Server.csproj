@@ -57,13 +57,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiModule.cs" />
-    <Compile Include="AuthenticationBootstrapper.cs" />
+    <Compile Include="Modules\ApiModule.cs" />
+    <Compile Include="NojiraBootstrapper.cs" />
+    <Compile Include="Models\IndexModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SiteModule.cs" />
+    <Compile Include="Modules\SiteModule.cs" />
     <Compile Include="UserValidator.cs" />
-    <Compile Include="Www.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -78,6 +78,7 @@
       <Name>Nojira.Utils</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release xcopy /s /Q /Y "$(TargetDir)*" "$(SolutionDir)\.release\unreleased\"
