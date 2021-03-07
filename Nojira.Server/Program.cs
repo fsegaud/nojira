@@ -59,11 +59,6 @@ namespace Nojira.Server
                 System.Console.WriteLine("##################################################################");
             }
 
-            if (!Www.Load())
-            {
-                return;
-            }
-
             Nancy.Hosting.Self.HostConfiguration cfg = new Nancy.Hosting.Self.HostConfiguration();
             cfg.UrlReservations.CreateAutomatically = true;
             cfg.MaximumConnectionCount = Nojira.Utils.Config.MaxConnections;
@@ -73,7 +68,7 @@ namespace Nojira.Server
                 System.Console.WriteLine($"Listening on '{Nojira.Utils.Config.BaseUri}'...");
                 host.Start();
 
-                System.Console.WriteLine("Done, done and done. Let's log! /o/");
+                System.Console.WriteLine("Done and done. Let's log! /o/");
                 System.Console.WriteLine("-------------------------------------------------------------------");
 
                 // TODO: 'q' to quit.
