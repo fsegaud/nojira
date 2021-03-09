@@ -38,7 +38,7 @@ namespace Nojira.Utils
 
         public static string DatabasePath => Config.userConfig != null ? Config.userConfig.DatabasePath : "nojira.db";
 
-        public static string DatabasePrevPath => Config.userConfig != null ? Config.userConfig.DatabasePrevPath : "nojira-prev.db";
+        public static string DatabasePrevPath => Config.userConfig != null ? Config.userConfig.DatabasePrevPath : "nojira.prev.db";
 
         public static void Load()
         {
