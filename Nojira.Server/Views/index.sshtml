@@ -48,7 +48,7 @@
 			</table>
 		</div>
 		<div id="footer"> 
-			<a href="https://github.com/fsegaud/nojira">https://github.com/fsegaud/nojira</a> | @Model.Version
+			<a href="https://github.com/fsegaud/nojira">https://github.com/fsegaud/nojira</a> | @Model.Version | <a href="/logout">Logout</a>
 		</div>
 		<script>
 				function executeQuery() {

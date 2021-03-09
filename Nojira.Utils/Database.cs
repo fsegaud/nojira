@@ -63,6 +63,11 @@ namespace Nojira.Utils
             return Database.connection.Query<User>($"SELECT * FROM User WHERE UserName = '{Database.Escape(username)}';").FirstOrDefault();
         }
 
+        public static User GetUser(System.Guid guid)
+        {
+            return Database.connection.Query<User>($"SELECT * FROM User WHERE Guid = '{guid}';").FirstOrDefault();
+        }
+
         public static int CountUser()
         {
             return Database.connection.ExecuteScalar<int>($"SELECT COUNT(Id) FROM User;");
@@ -138,6 +143,7 @@ namespace Nojira.Utils
             public User(string userName, string password)
             {
                 this.UserName = userName;
+                this.Guid = System.Guid.NewGuid();
 
                 byte[] salt;
                 new System.Security.Cryptography.RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
@@ -168,6 +174,12 @@ namespace Nojira.Utils
 
             [SQLite.MaxLength(64)]
             public string PasswordHash
+            {
+                get;
+                set;
+            }
+
+            public System.Guid Guid
             {
                 get;
                 set;
