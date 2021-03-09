@@ -5,6 +5,6 @@
 <td style="min-width:75px;" class="@Current.Type">@Current.Type</td>
 <td style="min-width:75px;">@Current.Project</td>
 <td style="min-width:75px;">@Current.Tag</td>
-<td style="min-width:75px;">@Current.Message</td>
+<td style="min-width:75px;width:100%;">@Current.Message</td>
 </tr>
 @EndEach
