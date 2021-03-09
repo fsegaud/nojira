@@ -76,7 +76,11 @@ namespace Nojira.Server
                 "/",
                 args =>
                 {
-                    this.RequiresAuthentication();
+                    if (Nojira.Utils.Config.RequireAuth)
+                    {
+                        this.RequiresAuthentication();
+                    }
+                    
                     return View["index", new IndexModel(Nojira.Utils.Database.GetAllLogs())];
                 });
 
@@ -84,7 +88,11 @@ namespace Nojira.Server
                 "/machine/{machine}",
                 args =>
                 {
-                    this.RequiresAuthentication();
+                    if (Nojira.Utils.Config.RequireAuth)
+                    {
+                        this.RequiresAuthentication();
+                    }
+
                     return this.View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerMachine(args.machine))];
                 });
 
@@ -92,7 +100,11 @@ namespace Nojira.Server
                 "/project/{project}",
                 args =>
                 {
-                    this.RequiresAuthentication();
+                    if (Nojira.Utils.Config.RequireAuth)
+                    {
+                        this.RequiresAuthentication();
+                    }
+
                     return this.View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerProject(args.project))];
                 });
 
@@ -100,7 +112,11 @@ namespace Nojira.Server
                 "/project/{project}/{tag}",
                 args =>
                 {
-                    this.RequiresAuthentication();
+                    if (Nojira.Utils.Config.RequireAuth)
+                    {
+                        this.RequiresAuthentication();
+                    }
+
                     return this.View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerProjectAndTag(args.project, args.tag))];
                 });
 
@@ -108,7 +124,11 @@ namespace Nojira.Server
                 "/q/{query*}",
                 args =>
                 {
-                    this.RequiresAuthentication();
+                    if (Nojira.Utils.Config.RequireAuth)
+                    {
+                        this.RequiresAuthentication();
+                    }
+
                     return this.View["index", new IndexModel(this.CustomQuery(args.query, out string error), args.query, error)];
                 });
         }
