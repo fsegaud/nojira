@@ -21,6 +21,8 @@
 namespace Nojira.Server
 {
     using System.Linq;
+    using Nancy.Authentication.Forms;
+    using Nancy.Extensions;
     using Nancy.Security;
 
     public sealed class SiteModule : Nancy.NancyModule
@@ -29,22 +31,86 @@ namespace Nojira.Server
         private const char KeySeparator = '=';
         private const char ValueSeparator = ',';
         private const string ConditionRegex = @"^\w+=[A-Za-z0-9-._]+(,[A-Za-z0-9-._]+)*$";
-        private static readonly string[] AllowedKeys = { "project", "tag", "type", "machinename" };
+
+        private static readonly string[] AllowedKeys =
+        {
+            "project", "tag", "type", "machinename"
+        };
 
         public SiteModule()
             : base("/")
         {
-            this.RequiresAuthentication();
+            this.Get(
+                "/login",
+                args =>
+                {
+                    dynamic model = new System.Dynamic.ExpandoObject();
+                    model.Errored = this.Request.Query.error.HasValue;
+                    model.Title = Nojira.Utils.Config.Title;
 
-            this.Get("/", args => { return View["index", new IndexModel(Nojira.Utils.Database.GetAllLogs())]; });
-            
-            this.Get("/machine/{machine}", args => { return View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerMachine(args.machine))]; });
+                    return View["login", model];
+                });
 
-            this.Get("/project/{project}", args => { return View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerProject(args.project))]; });
+            this.Post(
+                "/login",
+                args =>
+                {
+                    System.Guid? guid = NojiraUserMapper.ValidateUser((string)this.Request.Form.Username, (string)this.Request.Form.Password);
+                    if (guid == null)
+                    {
+                        return this.Context.GetRedirect($"~/login?error=true{(string)this.Request.Form.Username}");
+                    }
 
-            this.Get("/project/{project}/{tag}", args => { return View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerProjectAndTag(args.project, args.tag))]; });
+                    System.DateTime? expiry = null;
+                    if (this.Request.Form.RememberMe.HasValue)
+                    {
+                        expiry = System.DateTime.Now.AddDays(7);
+                    }
 
-            this.Get("/q/{query*}", args => { return View["index", new IndexModel(this.CustomQuery(args.query, out string error), args.query, error)]; });
+                    return this.LoginAndRedirect(guid.Value, expiry);
+                });
+
+            this.Get("/logout", args => this.LogoutAndRedirect("~/"));
+
+            this.Get(
+                "/",
+                args =>
+                {
+                    this.RequiresAuthentication();
+                    return View["index", new IndexModel(Nojira.Utils.Database.GetAllLogs())];
+                });
+
+            this.Get(
+                "/machine/{machine}",
+                args =>
+                {
+                    this.RequiresAuthentication();
+                    return this.View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerMachine(args.machine))];
+                });
+
+            this.Get(
+                "/project/{project}",
+                args =>
+                {
+                    this.RequiresAuthentication();
+                    return this.View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerProject(args.project))];
+                });
+
+            this.Get(
+                "/project/{project}/{tag}",
+                args =>
+                {
+                    this.RequiresAuthentication();
+                    return this.View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerProjectAndTag(args.project, args.tag))];
+                });
+
+            this.Get(
+                "/q/{query*}",
+                args =>
+                {
+                    this.RequiresAuthentication();
+                    return this.View["index", new IndexModel(this.CustomQuery(args.query, out string error), args.query, error)];
+                });
         }
 
         private System.Collections.Generic.IEnumerable<Nojira.Utils.Database.Log> CustomQuery(string userQuery, out string error)
