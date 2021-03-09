@@ -22,17 +22,6 @@ namespace Nojira.Server
 {
     public class NojiraUserMapper : Nancy.Authentication.Forms.IUserMapper
     {
-        public System.Security.Claims.ClaimsPrincipal GetUserFromIdentifier(System.Guid identifier, Nancy.NancyContext context)
-        {
-            Nojira.Utils.Database.User user = Nojira.Utils.Database.GetUser(identifier);
-            if (user == null)
-            {
-                return null;
-            }
-
-            return new System.Security.Claims.ClaimsPrincipal(new System.Security.Principal.GenericIdentity(user.UserName));
-        }
-
         public static System.Guid? ValidateUser(string username, string password)
         {
             Nojira.Utils.Database.User user = Nojira.Utils.Database.GetUser(username);
@@ -43,6 +32,17 @@ namespace Nojira.Server
             }
 
             return user.Guid;
+        }
+
+        public System.Security.Claims.ClaimsPrincipal GetUserFromIdentifier(System.Guid identifier, Nancy.NancyContext context)
+        {
+            Nojira.Utils.Database.User user = Nojira.Utils.Database.GetUser(identifier);
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new System.Security.Claims.ClaimsPrincipal(new System.Security.Principal.GenericIdentity(user.UserName));
         }
     }
 }
