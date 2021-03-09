@@ -21,7 +21,6 @@
 namespace Nojira.Server
 {
     using Nancy;
-    using Nancy.Authentication.Basic;
 
     public class NojiraBootstrapper : Nancy.DefaultNancyBootstrapper, IRootPathProvider
     {
@@ -38,13 +37,29 @@ namespace Nojira.Server
             return System.IO.Directory.GetCurrentDirectory();
         }
 
-        protected override void ApplicationStartup(Nancy.TinyIoc.TinyIoCContainer container, Nancy.Bootstrapper.IPipelines pipelines)
+        protected override void ConfigureApplicationContainer(Nancy.TinyIoc.TinyIoCContainer container)
         {
-            base.ApplicationStartup(container, pipelines);
+            // base not called on purpose.
+        }
 
-            pipelines.EnableBasicAuthentication(new Nancy.Authentication.Basic.BasicAuthenticationConfiguration(
-                container.Resolve<Nancy.Authentication.Basic.IUserValidator>(),
-                "Nojira.Server"));
+        protected override void ConfigureRequestContainer(Nancy.TinyIoc.TinyIoCContainer container, NancyContext context)
+        {
+            base.ConfigureRequestContainer(container, context);
+
+            container.Register<Nancy.Authentication.Forms.IUserMapper, NojiraUserMapper>();
+        }
+
+        protected override void RequestStartup(Nancy.TinyIoc.TinyIoCContainer container, Nancy.Bootstrapper.IPipelines pipelines, NancyContext context)
+        {
+            base.RequestStartup(container, pipelines, context);
+
+            Nancy.Authentication.Forms.FormsAuthenticationConfiguration authConfig = new Nancy.Authentication.Forms.FormsAuthenticationConfiguration()
+            {
+                RedirectUrl = "~/login",
+                UserMapper = container.Resolve<Nancy.Authentication.Forms.IUserMapper>()
+            };
+
+            Nancy.Authentication.Forms.FormsAuthentication.Enable(pipelines, authConfig);
         }
     }
 }
