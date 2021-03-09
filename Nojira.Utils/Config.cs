@@ -28,9 +28,13 @@ namespace Nojira.Utils
 
         public static string Title => Config.userConfig != null ? Config.userConfig.Title : "Nojira Server";
 
+        public static string Subtitle => Config.userConfig != null ? Config.userConfig.Subtitle : "Remote Logging";
+
         public static string BaseUri => Config.userConfig != null ? Config.userConfig.BaseUri : "http://localhost:80";
 
         public static int MaxConnections => Config.userConfig != null ? Config.userConfig.MaxConnections : 16;
+
+        public static bool RequireAuth => Config.userConfig != null ? Config.userConfig.RequireAuth : true;
 
         public static string DatabasePath => Config.userConfig != null ? Config.userConfig.DatabasePath : "nojira.db";
 
@@ -49,8 +53,10 @@ namespace Nojira.Utils
                 UserConfig cfg = new UserConfig()
                 {
                     Title = Config.Title,
+                    Subtitle = Config.Subtitle,
                     BaseUri = Config.BaseUri,
                     MaxConnections = Config.MaxConnections,
+                    RequireAuth = Config.RequireAuth,
                     DatabasePath = Config.DatabasePath,
                     DatabasePrevPath = Config.DatabasePrevPath
                 };
@@ -63,8 +69,10 @@ namespace Nojira.Utils
         private class UserConfig
         {
             public string Title;
+            public string Subtitle;
             public string BaseUri;
             public int MaxConnections;
+            public bool RequireAuth;
             public string DatabasePath;
             public string DatabasePrevPath;
         }
