@@ -68,7 +68,7 @@ namespace Nojira.Server
                 System.Console.WriteLine($"Listening on '{Nojira.Utils.Config.BaseUri}'...");
                 host.Start();
 
-                System.Console.WriteLine("Done and done. Let's log! /o/");
+                System.Console.WriteLine("Done and done. Let's log!");
                 System.Console.WriteLine("-------------------------------------------------------------------");
 
                 // TODO: 'q' to quit.

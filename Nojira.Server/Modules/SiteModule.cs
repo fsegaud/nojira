@@ -47,6 +47,7 @@ namespace Nojira.Server
                     dynamic model = new System.Dynamic.ExpandoObject();
                     model.Errored = this.Request.Query.error.HasValue;
                     model.Title = Nojira.Utils.Config.Title;
+                    model.Subtitle = Nojira.Utils.Config.Subtitle;
 
                     return View["login", model];
                 });
