@@ -81,8 +81,8 @@ namespace Nojira.Server
                     {
                         this.RequiresAuthentication();
                     }
-                    
-                    return View["index", new IndexModel(Nojira.Utils.Database.GetAllLogs())];
+
+                    return View["index", new IndexModel(this.Context, Nojira.Utils.Database.GetAllLogs())];
                 });
 
             this.Get(
@@ -94,7 +94,7 @@ namespace Nojira.Server
                         this.RequiresAuthentication();
                     }
 
-                    return this.View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerMachine(args.machine))];
+                    return this.View["index", new IndexModel(this.Context, Nojira.Utils.Database.GetLogsPerMachine(args.machine))];
                 });
 
             this.Get(
@@ -106,7 +106,7 @@ namespace Nojira.Server
                         this.RequiresAuthentication();
                     }
 
-                    return this.View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerProject(args.project))];
+                    return this.View["index", new IndexModel(this.Context, Nojira.Utils.Database.GetLogsPerProject(args.project))];
                 });
 
             this.Get(
@@ -118,7 +118,7 @@ namespace Nojira.Server
                         this.RequiresAuthentication();
                     }
 
-                    return this.View["index", new IndexModel(Nojira.Utils.Database.GetLogsPerProjectAndTag(args.project, args.tag))];
+                    return this.View["index", new IndexModel(this.Context, Nojira.Utils.Database.GetLogsPerProjectAndTag(args.project, args.tag))];
                 });
 
             this.Get(
@@ -130,7 +130,7 @@ namespace Nojira.Server
                         this.RequiresAuthentication();
                     }
 
-                    return this.View["index", new IndexModel(this.CustomQuery(args.query, out string error), args.query, error)];
+                    return this.View["index", new IndexModel(this.Context, this.CustomQuery(args.query, out string error), args.query, error)];
                 });
         }
 

@@ -26,15 +26,17 @@ namespace Nojira.Utils
 
         private static UserConfig userConfig = null;
 
-        public static string Title => Config.userConfig != null ? Config.userConfig.Title : "Nojira Server";
+        public static string Title => Config.userConfig != null ? Config.userConfig.Title : "Nojira";
 
-        public static string Subtitle => Config.userConfig != null ? Config.userConfig.Subtitle : "Remote Logging";
+        public static string Subtitle => Config.userConfig != null ? Config.userConfig.Subtitle : "";
 
         public static string BaseUri => Config.userConfig != null ? Config.userConfig.BaseUri : "http://localhost:80";
 
         public static int MaxConnections => Config.userConfig != null ? Config.userConfig.MaxConnections : 16;
 
         public static bool RequireAuth => Config.userConfig != null ? Config.userConfig.RequireAuth : true;
+
+        public static bool EnableTraces => Config.userConfig != null ? Config.userConfig.EnableTraces : false;
 
         public static string DatabasePath => Config.userConfig != null ? Config.userConfig.DatabasePath : "nojira.db";
 
@@ -57,6 +59,7 @@ namespace Nojira.Utils
                     BaseUri = Config.BaseUri,
                     MaxConnections = Config.MaxConnections,
                     RequireAuth = Config.RequireAuth,
+                    EnableTraces = Config.EnableTraces,
                     DatabasePath = Config.DatabasePath,
                     DatabasePrevPath = Config.DatabasePrevPath
                 };
@@ -66,6 +69,16 @@ namespace Nojira.Utils
             }
         }
 
+        public static string GetConfigFileContent()
+        {
+            if (System.IO.File.Exists(Config.FilePath))
+            {
+                return System.IO.File.ReadAllText(Config.FilePath);
+            }
+
+            return "FileNotFound";
+        }
+
         private class UserConfig
         {
             public string Title;
@@ -73,6 +86,7 @@ namespace Nojira.Utils
             public string BaseUri;
             public int MaxConnections;
             public bool RequireAuth;
+            public bool EnableTraces;
             public string DatabasePath;
             public string DatabasePrevPath;
         }

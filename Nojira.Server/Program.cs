@@ -24,8 +24,15 @@ namespace Nojira.Server
     {
         public const string Version = "v0.5-dev";
 
+        public static bool ExitRequest = false;
+
         private const string DefaultUsername = "nojira";
-        private const string DefaultPassword = "nojira";
+#if DEBUG
+        private static readonly string DefaultPassword = "nojira";
+#else
+        private static readonly string DefaultPassword = System.Convert.ToBase64String(System.Guid.NewGuid().ToByteArray())
+            .Replace("+", string.Empty).Replace("/", string.Empty).Substring(0, 6);
+#endif
 
         public static void Main(string[] args)
         {
@@ -51,7 +58,7 @@ namespace Nojira.Server
             Nojira.Utils.Database.Connect(Nojira.Utils.Config.DatabasePath, Nojira.Utils.Config.DatabasePrevPath);
             if (Nojira.Utils.Database.CountUser() == 0)
             {
-                Nojira.Utils.Database.CreateUser(new Nojira.Utils.Database.User(Program.DefaultUsername, Program.DefaultPassword));
+                Nojira.Utils.Database.CreateUser(new Nojira.Utils.Database.User(Program.DefaultUsername, Program.DefaultPassword, true));
 
                 System.Console.WriteLine("##################################################################");
                 System.Console.WriteLine($"##     Created default user account ({Program.DefaultUsername}:{Program.DefaultPassword}).            ##");
@@ -71,16 +78,11 @@ namespace Nojira.Server
                 System.Console.WriteLine("Done and done. Let's log!");
                 System.Console.WriteLine("-------------------------------------------------------------------");
 
-                // TODO: 'q' to quit.
-                while (true)
+                while (!Program.ExitRequest)
                 {
-                    System.ConsoleKeyInfo key = System.Console.ReadKey();
-                    if (key.KeyChar == 'q' || key.KeyChar == 'Q')
-                    {
-                        System.Console.WriteLine();
-                        break;
-                    }
                 }
+
+                System.Threading.Thread.Sleep(100);
             }
 
             Nojira.Utils.Database.Disconnect();
