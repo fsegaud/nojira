@@ -57,6 +57,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\AdminModel.cs" />
+    <Compile Include="Models\MasterModel.cs" />
+    <Compile Include="Modules\AdminModule.cs" />
     <Compile Include="Modules\ApiModule.cs" />
     <Compile Include="NojiraBootstrapper.cs" />
     <Compile Include="Models\IndexModel.cs" />

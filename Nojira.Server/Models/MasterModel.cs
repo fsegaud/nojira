@@ -20,22 +20,37 @@
 
 namespace Nojira.Server
 {
-    public sealed class ApiModule : Nancy.NancyModule
+    public abstract class MasterModel
     {
-        public ApiModule()
-            : base("api")
+        protected Nancy.NancyContext context = null;
+
+        protected MasterModel(Nancy.NancyContext context)
         {
-            this.Get(
-                "/log/{machine}/{type}/{project}/{tag}/{message*}",
-                args =>
+            this.context = context;
+        }
+
+        public string Title => Nojira.Utils.Config.Title;
+
+        public string Subtitle => Nojira.Utils.Config.Subtitle;
+
+        public string Version => Program.Version;
+
+        public abstract bool IsAdmin
+        {
+            get;
+        }
+
+        public bool IsLoggedIn
+        {
+            get
+            {
+                if (this.context.CurrentUser == null || string.IsNullOrEmpty(this.context.CurrentUser.Identity.Name))
                 {
-                    string formattedLog = $"[{System.DateTime.Now}] <{args.type}> {args.project}.{args.tag}: {args.message}";
+                    return false;
+                }
 
-                    Nojira.Utils.Database.Log log = new Nojira.Utils.Database.Log(System.DateTime.Now, args.machine, args.type, args.project, args.tag, args.message);
-                    Nojira.Utils.Database.AddLog(log);
-
-                    return "OK";
-                });
+                return true;
+            }
         }
     }
 }

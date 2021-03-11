@@ -22,27 +22,23 @@ namespace Nojira.Server
 {
     using System.Linq;
 
-    public class IndexModel
+    public class IndexModel : MasterModel
     {
-        public IndexModel(System.Collections.Generic.IEnumerable<Nojira.Utils.Database.Log> logs)
+        public IndexModel(Nancy.NancyContext context, System.Collections.Generic.IEnumerable<Nojira.Utils.Database.Log> logs)
+            : base(context)
         {
+            this.context = context;
             this.Logs = logs;
             this.Query = string.Empty;
         }
 
-        public IndexModel(System.Collections.Generic.IEnumerable<Nojira.Utils.Database.Log> logs, string query, string error)
-            : this(logs)
+        public IndexModel(Nancy.NancyContext context, System.Collections.Generic.IEnumerable<Nojira.Utils.Database.Log> logs, string query, string error)
+            : this(context, logs)
         {
             this.Query = query;
             this.Error = error;
         }
-
-        public string Title => Nojira.Utils.Config.Title;
-
-        public string Subtitle => Nojira.Utils.Config.Subtitle;
-
-        public string Version => Program.Version;
-
+        
         public System.Collections.Generic.IEnumerable<string> ProjectShortcuts => Nojira.Utils.Database.GetProjects().Select(p => p.Project);
 
         public System.Collections.Generic.IEnumerable<string> TagShortcuts => Nojira.Utils.Database.GetTags().Select(p => $"{p.Project}/{p.Tag}");
@@ -50,6 +46,25 @@ namespace Nojira.Server
         public System.Collections.Generic.IEnumerable<string> MachineShortcuts => Nojira.Utils.Database.GetMachineNames().Select(p => p.MachineName);
 
         public bool HasError => !string.IsNullOrEmpty(this.Error);
+
+        public override bool IsAdmin
+        {
+            get
+            {
+                if (this.context.CurrentUser == null || string.IsNullOrEmpty(this.context.CurrentUser.Identity.Name))
+                {
+                    return false;
+                }
+
+                Nojira.Utils.Database.User user = Nojira.Utils.Database.GetUser(this.context.CurrentUser.Identity.Name);
+                if (user == null)
+                {
+                    return false;
+                }
+
+                return user.Admin;
+            }
+        }
 
         public string Error
         {

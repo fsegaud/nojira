@@ -29,7 +29,7 @@ namespace Nojira.Server
         public override void Configure(Nancy.Configuration.INancyEnvironment environment)
         {
             base.Configure(environment);
-            environment.Tracing(true, true);
+            environment.Tracing(Nojira.Utils.Config.EnableTraces, Nojira.Utils.Config.EnableTraces);
         }
 
         public string GetRootPath()

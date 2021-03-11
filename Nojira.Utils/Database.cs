@@ -78,6 +78,16 @@ namespace Nojira.Utils
             Database.connection.ExecuteScalar<int>($"DELETE FROM User WHERE Username = '{Database.Escape(username)}';");
         }
 
+        public static void DeleteUser(int id)
+        {
+            Database.connection.ExecuteScalar<int>($"DELETE FROM User WHERE Id = '{id}';");
+        }
+
+        public static void SetUserRole(int id, bool admin)
+        {
+            Database.connection.ExecuteScalar<int>($"UPDATE User Set Admin = '{(admin ? 1 : 0)}' WHERE Id = '{id}';");
+        }
+
         public static void AddLog(Log log)
         {
             Database.connection.Insert(log);
@@ -140,10 +150,11 @@ namespace Nojira.Utils
             {
             }
 
-            public User(string userName, string password)
+            public User(string userName, string password, bool admin = false)
             {
                 this.UserName = userName;
                 this.Guid = System.Guid.NewGuid();
+                this.Admin = admin;
 
                 byte[] salt;
                 new System.Security.Cryptography.RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
@@ -180,6 +191,12 @@ namespace Nojira.Utils
             }
 
             public System.Guid Guid
+            {
+                get;
+                set;
+            }
+
+            public bool Admin
             {
                 get;
                 set;

@@ -1,77 +1,30 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<style>
-			body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif; margin: 0px; padding: 0px;}
-			
-			div#title-bar { background-color: #153B62; maring: 0px; padding: 8px; }
-			img.logo { vertical-align: middle; }
-			span.title { color:#fff; font-size:72px; font-weight: bolder; vertical-align: middle; letter-spacing:-3px; display: inline-block; padding-bottom: 4px;}
-			span.subtitle { color:#fff; font-size:24px; font-weight: normal; vertical-align: bottom; letter-spacing:-1px; display: inline-block; padding: 16px 8px; }
-						
-			div#tool-bar { background-color: #eee; maring: 0px; padding: 8px; }
-			span#error {color: red; background-color: #ffe0e0; border: 1px solid red; border-radius: 4px; width:462px; padding: 0px 8px 0px 8px;}
-			span.short { margin-right: 16px; }
-			span.version { color: #153B62; float: right; margin: 0px 8px; }
-			
-			a.logout { float: right; color: #f00; margin: 0px 8px; }
-			a.logout:link {color: #f00; background-color: #fff; border: 1px solid #f00; border-radius: 4px; text-decoration: none; padding: 0px 4px 0px 4px;}
-			a.logout:visited {color: #f00; background-color: #fff; border: 1px solid #f00; border-radius: 4px; text-decoration: none; padding: 0px 4px 0px 4px;}
-			a.logout:hover {color: #f00; background-color: #fee; border: 1px solid #f00; border-radius: 4px; text-decoration: none; padding: 0px 4px 0px 4px;}
-			a.logout:active {color: #f00; background-color: #fee; border: 1px solid #f00; border-radius: 4px; text-decoration: none; padding: 0px 4px 0px 4px;}	
-			
-			a.shortcut:link {color: #153B62; background-color: #fff; border: 1px solid #153B62; border-radius: 4px; text-decoration: none; padding: 0px 4px 0px 4px; font-size: 12px;}
-			a.shortcut:visited {color: #153B62; background-color: #fff; border: 1px solid #153B62; border-radius: 4px; text-decoration: none; padding: 0px 4px 0px 4px; font-size: 12px;}
-			a.shortcut:hover {color: #153B62; background-color: #eef; border: 1px solid #153B62; border-radius: 4px; text-decoration: none; padding: 0px 4px 0px 4px; font-size: 12px;}
-			a.shortcut:active {color: #153B62; background-color: #eef; border: 1px solid #153B62; border-radius: 4px; text-decoration: none; padding: 0px 4px 0px 4px; font-size: 12px;}		
-			
-			div#logs-container { margin-top: 0px; padding: 0px;}
-			table tr td {padding-left: 8px; padding-right: 8px;}
-			table.logs { width: 100%; border-spacing: 0px;}
-			table.logs thead tr td {font-weight: bold; background-color: #ccc;}
-			table.logs tr:nth-child(even) {background-color: #eee;}
-			table.logs tr:nth-child(odd) {background-color: #fff;}
-			table.logs tr td.info {color: #4080f0;}
-			table.logs tr td.warning {color: #ffb000;}
-			table.logs tr td.error {color: #ff0000;}
-			
-		</style>
-		<title>Nojira - @Model.Title</title>
-	</head>
-	<body>
-		<div id="title-bar">
-			<a href="/"><img class="logo" src="data:image;base64,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"/></a>
-			<span class="title">@Model.Title</span>
-			<span class="subtitle">@Model.Subtitle</span>
-		</div>
-		<div id="tool-bar">
-			<input type="text" id="queryField" name="queryField" value="@Model.Query" style="width:300px;">
-			<button onclick="executeQuery();">Query</button>
-			@If.Model.HasError
-				<span id="error">@Model.Error</span>
-			@EndIf
-			&nbsp;&nbsp;&nbsp;
-			<span class="short">Projects <a class="shortcut" href="/">*</a>@Each.Model.ProjectShortcuts <a class="shortcut" href="/project/@Current">@Current</a> @EndEach</span>
-			<span class="short">Tags @Each.Model.TagShortcuts <a class="shortcut" href="/project/@Current">@Current</a> @EndEach</span>
-			<span class="short">Machines @Each.Model.MachineShortcuts <a class="shortcut" href="/machine/@Current">@Current</a> @EndEach</span>			
-			<a href="/logout" class="logout">Logout</a>
-			<span class="version">v0.5-dev</span>
-		</div>
-		<div id="logs-container">
-			<table class="logs">
-				<thead><tr><td>Timestamp</td><td>Machine</td><td>Type</td><td>Project</td><td>Tag</td><td>Message</td></tr></thead>
-				@Partial['log', Model.Logs];
-				</tr>
-			</table>
-		</div>
-		<script>
-				function executeQuery() {
-					var query = document.getElementById('queryField').value;
-					if (query != '')
-						window.location.href = window.location.origin + "/q/" + query.replaceAll(' ','');
-					else
-						window.location.href = window.location.origin;
-				}
-		</script>
-	<body>
-</html>
+@Master['master.sshtml']
+@Section['Content']
+<div id="tool-bar">
+	<input type="text" id="queryField" name="queryField" value="@Model.Query" style="width:300px;">
+	<button onclick="executeQuery();">Query</button>
+	@If.Model.HasError
+		<span id="error">@Model.Error</span>
+	@EndIf
+	&nbsp;&nbsp;&nbsp;
+	<span class="short">Projects <a class="shortcut" href="/">*</a>@Each.Model.ProjectShortcuts <a class="shortcut" href="/project/@Current">@Current</a> @EndEach</span>
+	<span class="short">Tags @Each.Model.TagShortcuts <a class="shortcut" href="/project/@Current">@Current</a> @EndEach</span>
+	<span class="short">Machines @Each.Model.MachineShortcuts <a class="shortcut" href="/machine/@Current">@Current</a> @EndEach</span>	
+</div>
+<div id="logs-container">
+	<table class="logs">
+		<thead><tr><td>Timestamp</td><td>Machine</td><td>Type</td><td>Project</td><td>Tag</td><td>Message</td></tr></thead>
+		@Partial['log', Model.Logs];
+		</tr>
+	</table>
+</div>
+<script>
+		function executeQuery() {
+			var query = document.getElementById('queryField').value;
+			if (query != '')
+				window.location.href = window.location.origin + "/q/" + query.replaceAll(' ','');
+			else
+				window.location.href = window.location.origin;
+		}
+</script>
+@EndSection
