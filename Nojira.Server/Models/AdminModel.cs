@@ -20,22 +20,33 @@
 
 namespace Nojira.Server
 {
-    public sealed class ApiModule : Nancy.NancyModule
+    using System.Linq;
+
+    public class AdminModel : MasterModel
     {
-        public ApiModule()
-            : base("api")
+        public AdminModel(Nancy.NancyContext context, bool isAdmin)
+            : base(context)
         {
-            this.Get(
-                "/log/{machine}/{type}/{project}/{tag}/{message*}",
-                args =>
-                {
-                    string formattedLog = $"[{System.DateTime.Now}] <{args.type}> {args.project}.{args.tag}: {args.message}";
+            this.context = context;
+            this.IsAdmin = isAdmin;
+        }
 
-                    Nojira.Utils.Database.Log log = new Nojira.Utils.Database.Log(System.DateTime.Now, args.machine, args.type, args.project, args.tag, args.message);
-                    Nojira.Utils.Database.AddLog(log);
+        public string Config => AdminModel.JsonToHtml(Nojira.Utils.Config.GetConfigFileContent());
 
-                    return "OK";
-                });
+        public Nojira.Utils.Database.User[] Users => Nojira.Utils.Database.GetAllUsers().ToArray();
+
+        public override bool IsAdmin
+        {
+            get;
+        }
+
+        private static string JsonToHtml(string json)
+        {
+            string html = json.Replace("\n", "<br/>").Replace("    ", "&nbsp;&nbsp;&nbsp;&nbsp;");
+            html = System.Text.RegularExpressions.Regex.Replace(html, "\"[A-Za-z0-9-_.:/]*\"", m => $"<span style=\"color:purple;\">{m}</span>");
+            html = System.Text.RegularExpressions.Regex.Replace(html, "(?<=\\s)false|true(?=,)", m => $"<span style=\"color:blue;\">{m}</span>");
+            html = System.Text.RegularExpressions.Regex.Replace(html, "(?<=\\s)\\d+(?=,)", m => $"<span style=\"color:red;\">{m}</span>");
+            return html;
         }
     }
 }

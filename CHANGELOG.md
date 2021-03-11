@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased - ????-??-??
+## Added
+- [server] Added an adminitration page in the web UI, only accessible to admin users.
+- [utils] Added `Guid` and `Admin` fields in the `User` table of the database (for forms authentication and admin page access).
+- [utils] Added a `RequireAuth` field in the configuration file to allow access to the log page without logging.
+## Changed
+- [server] Revamped the Web UI.
+- [server] Basic authentication has been replaced with form authentication.
+- [server] Added an option to disable authentication in the configuration.
+- [server] Added a subtitle field in the configuration.
+- [server] Default account password is now randomized in release builds.
+
 ## v0.5-dev - 2021-03-07
 ### Added
 - [server] The Nojira server now user basic authentication to let users access the web interface.
