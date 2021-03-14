@@ -9,10 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nojira.Client", "Nojira.Cli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nojira.Test", "Nojira.Test\Nojira.Test.csproj", "{91771A91-2DD3-43C6-A349-79D4D69BE5F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nojira.Utils", "Nojira.Utils\Nojira.Utils.csproj", "{4A9E3740-539B-4A86-9C4D-3FE31898EC3A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nojira.Admin", "Nojira.Admin\Nojira.Admin.csproj", "{17FAB7AB-73A9-415E-ADD0-4B4633B34D68}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,14 +27,6 @@ Global
 		{91771A91-2DD3-43C6-A349-79D4D69BE5F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91771A91-2DD3-43C6-A349-79D4D69BE5F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91771A91-2DD3-43C6-A349-79D4D69BE5F1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A9E3740-539B-4A86-9C4D-3FE31898EC3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A9E3740-539B-4A86-9C4D-3FE31898EC3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A9E3740-539B-4A86-9C4D-3FE31898EC3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A9E3740-539B-4A86-9C4D-3FE31898EC3A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{17FAB7AB-73A9-415E-ADD0-4B4633B34D68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{17FAB7AB-73A9-415E-ADD0-4B4633B34D68}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{17FAB7AB-73A9-415E-ADD0-4B4633B34D68}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{17FAB7AB-73A9-415E-ADD0-4B4633B34D68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
