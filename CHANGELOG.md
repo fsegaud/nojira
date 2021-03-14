@@ -3,6 +3,7 @@
 ## Unreleased - ????-??-??
 ## Added
 - [server] Added an adminitration page in the web UI that include user management, only accessible to admin users.
+- [server] Added argument `--restore-admin` to reset the admin account. An admin account is automatically created if none exists in database.
 - [utils] Added a `RequireAuth` option to disable authentication in the configuration.
 - [utils] Added a `Subtitle` field in the configuration.
 - [utils] Added `Guid` and `Admin` fields in the `User` table of the database (for forms authentication and admin page access).

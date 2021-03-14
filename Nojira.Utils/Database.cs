@@ -114,9 +114,16 @@ namespace Nojira.Utils
             return Database.connection.Query<User>($"SELECT * FROM User WHERE Guid = '{guid}';").FirstOrDefault();
         }
 
-        public static int CountUser()
+        public static int CountUser(bool adminsOnly = false)
         {
-            return Database.connection.ExecuteScalar<int>($"SELECT COUNT(Id) FROM User;");
+            if (adminsOnly)
+            {
+                return Database.connection.ExecuteScalar<int>($"SELECT COUNT(Id) FROM User WHERE Admin == '1';");
+            }
+            else
+            {
+                return Database.connection.ExecuteScalar<int>($"SELECT COUNT(Id) FROM User;");
+            }
         }
 
         public static void DeleteUser(string username)
