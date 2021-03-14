@@ -21,10 +21,10 @@
 // TODO: --restore-admin
 // TODO: Remove Nojira.Admin and migrate Nojira.Utils?
 
-using System.Linq;
-
 namespace Nojira.Server
 {
+    using System.Linq;
+
     public class Program
     {
         public const string Version = "v0.5-dev";

@@ -28,7 +28,7 @@ namespace Nojira.Utils
 
         public static string Title => Config.userConfig != null ? Config.userConfig.Title : "Nojira";
 
-        public static string Subtitle => Config.userConfig != null ? Config.userConfig.Subtitle : "";
+        public static string Subtitle => Config.userConfig != null ? Config.userConfig.Subtitle : string.Empty;
 
         public static string BaseUri => Config.userConfig != null ? Config.userConfig.BaseUri : "http://localhost";
 
