@@ -7,8 +7,9 @@
 		<form method="POST">
 			<table>
 				<tr><td>Username</td><td><input type="text" name="Username"/></td></tr>
-				<tr><td>Password</td><td><input type="password" name="Password"/></td><td><input type="submit" value="Add" style="width: 100px;"/></td></tr>
+				<tr><td>Password*</td><td><input type="password" name="Password"/></td><td><input type="submit" value="Add" style="width: 100px;"/></td></tr>
 			</table>
+			&nbsp;&nbsp;<i>* Leave password field empty to generate a reset password link.</i>
 		</form>
 		<br/>
 	
@@ -19,28 +20,31 @@
 					<td>@Current.Id</td>
 					<td>@Current.UserName</td>
 					<td>@If.Admin admin @EndIf @IfNot.Admin user @EndIf</td>
-					<td>@IfNot.Admin <a href="/admin/promote-user/@Current.Id" class="blue-button">Promote</a> @EndIf
-					@If.Admin<a href="/admin/demote-user/@Current.Id" class="orange-button">Demote</a> @EndIf
-					<a href="/admin/delete-user/@Current.Id" class="red-button">Delete</a></td>
+					<td><a href="/admin/user/@Current.Id/reset" class="green-button">Reset Pass</a>
+					@IfNot.Admin <a href="/admin/user/@Current.Id/promote" class="blue-button">Promote</a> @EndIf
+					@If.Admin <a href="/admin/user/@Current.Id/demote" class="orange-button">Demote</a> @EndIf
+					<a href="/admin/user/@Current.Id/delete" class="red-button">Delete</a></td>
 				</tr>
 			@EndEach
 		</table>
 	</div>
 </div>
-
 <div class="panel">
-	<div class="panel-title">Configuration</div>
+	<div class="panel-title">Server Configuration</div>
 	<div class="panel-container">
 		<p class="code">@Model.Config</p>
 	</div>
 </div>
-
 <div class="panel">
-	<div class="panel-title">Misc</div>
+	<div class="panel-title">Control Panel</div>
 	<div class="panel-container">
-		Version: @Model.Version<br/><br/>
-		<a href="/admin/clear-logs" class="orange-button">Clear Logs</a><br/><br/>
-		<a href="/admin/shutdown" class="red-button">Shutdown</a>
+		<table>
+			<tr><td>Version</td><td><a href="https://github.com/fsegaud/nojira/releases/tag/@Model.Version" class="green-button">@Model.Version</a></td></tr>
+			<tr><td>Purge all password reset tokens</td><td><a href="/admin/purge-tokens" class="orange-button">Purge Tokens</a></td></tr>
+			<tr><td>Clear all logs from database</td><td><a href="/admin/clear-logs" class="orange-button">Clear Logs</a></td></tr>
+			<tr><td>Stop server process</td><td><a href="/admin/shutdown" class="red-button">Shutdown</a></td></tr>
+		</table>
+		
 	</div>
 </div>
 @EndSection

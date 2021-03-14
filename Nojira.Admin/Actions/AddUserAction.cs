@@ -34,7 +34,7 @@ namespace Nojira.Admin
             if (Nojira.Utils.Database.GetUser(this.username) == null)
             {
                 // TODO: Add admin option.
-                if (Nojira.Utils.Database.CreateUser(new Nojira.Utils.Database.User(this.username, this.password)))
+                if (Nojira.Utils.Database.CreateUser(new Nojira.Utils.Database.User(this.username, this.password)) >= 0)
                 {
                     this.Status = $"Added user '{this.username}'.";
                     result = true;

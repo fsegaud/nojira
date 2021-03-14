@@ -1,0 +1,10 @@
+@Master['master.sshtml']
+@Section['Content']
+<div style="text-align: center; padding-top: 64px;">
+	User account setup link (valid 24 hours)
+	<br/><br/>
+	<span style="font-size: 16px; border: 1px solid #153B62; padding: 8px;">@Model.Url</span><br/>
+	<br/>
+	<a href="/admin">Back</a>
+</div>
+@EndSection
