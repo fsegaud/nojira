@@ -239,7 +239,7 @@ namespace Nojira.Utils
             }
 
             public User(string userName, bool admin = false)
-                : this (userName, User.GenerateRandomPassword(), admin)
+                : this(userName, User.GenerateRandomPassword(), admin)
             {
             }
 
