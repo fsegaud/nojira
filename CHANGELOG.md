@@ -1,14 +1,14 @@
 # Changelog
 
-## Unreleased - ????-??-??
+## v0.6-dev - 2021-03-14
 ## Added
 - [server] Added an adminitration page in the web UI that include user management, only accessible to admin users.
 - [server] Added argument `--restore-admin` to reset the admin account. An admin account is automatically created if none exists in database.
-- [utils] Added a `RequireAuth` option to disable authentication in the configuration.
-- [utils] Added a `Subtitle` field in the configuration.
-- [utils] Added `Guid` and `Admin` fields in the `User` table of the database (for forms authentication and admin page access).
-- [utils] Added a `RequireAuth` field in the configuration file to allow access to the log page without logging.
-- [utils] Added a `UserToken` table in the database, that manages password reset tokens.
+- [server] Added a `RequireAuth` option to disable authentication in the configuration.
+- [server] Added a `Subtitle` field in the configuration.
+- [server] Added `Guid` and `Admin` fields in the `User` table of the database (for forms authentication and admin page access).
+- [server] Added a `RequireAuth` field in the configuration file to allow access to the log page without logging.
+- [server] Added a `UserToken` table in the database, that manages password reset tokens.
 ## Changed
 - [server] Revamped the Web UI.
 - [server] Basic authentication has been replaced with form authentication.

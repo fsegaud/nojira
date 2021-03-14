@@ -27,7 +27,7 @@ namespace Nojira.Server
 
     public class Program
     {
-        public const string Version = "v0.5-dev";
+        public const string Version = "v0.6-dev";
 
         public static bool ExitRequest = false;
 
