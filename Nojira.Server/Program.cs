@@ -18,6 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+// TODO: --restore-admin
+// TODO: Remove Nojira.Admin and migrate Nojira.Utils?
 namespace Nojira.Server
 {
     public class Program
@@ -27,12 +29,6 @@ namespace Nojira.Server
         public static bool ExitRequest = false;
 
         private const string DefaultUsername = "nojira";
-#if DEBUG
-        private static readonly string DefaultPassword = "nojira";
-#else
-        private static readonly string DefaultPassword = System.Convert.ToBase64String(System.Guid.NewGuid().ToByteArray())
-            .Replace("+", string.Empty).Replace("/", string.Empty).Substring(0, 6);
-#endif
 
         public static void Main(string[] args)
         {
@@ -58,10 +54,11 @@ namespace Nojira.Server
             Nojira.Utils.Database.Connect(Nojira.Utils.Config.DatabasePath, Nojira.Utils.Config.DatabasePrevPath);
             if (Nojira.Utils.Database.CountUser() == 0)
             {
-                Nojira.Utils.Database.CreateUser(new Nojira.Utils.Database.User(Program.DefaultUsername, Program.DefaultPassword, true));
+                string password = Nojira.Utils.Database.User.GenerateRandomPassword();
+                Nojira.Utils.Database.CreateUser(new Nojira.Utils.Database.User(Program.DefaultUsername, password, true));
 
                 System.Console.WriteLine("##################################################################");
-                System.Console.WriteLine($"##     Created default user account ({Program.DefaultUsername}:{Program.DefaultPassword}).            ##");
+                System.Console.WriteLine($"##     Created default user account ({Program.DefaultUsername}:{password}).            ##");
                 System.Console.WriteLine("##     Remember to create a proper one and remove this one.     ##");
                 System.Console.WriteLine("##################################################################");
             }

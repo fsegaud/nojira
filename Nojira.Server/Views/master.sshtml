@@ -46,6 +46,7 @@
 			div.panel-container { padding: 16px; margin: 8px; }
 			
 			p.code { font-family: Consolas; font-size: 12px; border: 1px solid #ccc; border-left-width: 16px; border-radius: 16px; padding: 8px 16px; margin: 0px; }
+			span.code { font-family: Consolas; font-size: 12px; border: 1px solid #ccc; border-left-width: 16px; border-radius: 16px; padding: 8px 16px; margin: 0px; }
 		
 			table tr td {padding-left: 8px; padding-right: 8px;}
 			table.users { border-spacing: 2px;}
@@ -68,6 +69,12 @@
 			a.orange-button:visited { background-color: #fff; }
 			a.orange-button:hover { background-color: #fed; }
 			a.orange-button:active { background-color: #fed; }
+			
+			a.green-button { color: #0a0; border: 1px solid #0a0; border-radius: 4px; text-decoration: none; margin: 0px; padding: 0px 4px 0px 4px; display: inline-block; text-align: center; width: 100px; }
+			a.green-button:link { background-color: #fff; }
+			a.green-button:visited { background-color: #fff; }
+			a.green-button:hover { background-color: #dfd; }
+			a.green-button:active { background-color: #dfd; }
 			
 		</style>
 		<title>Nojira - @Model.Title</title>

@@ -59,6 +59,8 @@
   <ItemGroup>
     <Compile Include="Models\AdminModel.cs" />
     <Compile Include="Models\MasterModel.cs" />
+    <Compile Include="Models\UrlModel.cs" />
+    <Compile Include="Modules\AccountModule.cs" />
     <Compile Include="Modules\AdminModule.cs" />
     <Compile Include="Modules\ApiModule.cs" />
     <Compile Include="NojiraBootstrapper.cs" />
