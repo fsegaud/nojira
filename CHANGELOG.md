@@ -13,6 +13,8 @@
 - [server] Revamped the Web UI.
 - [server] Basic authentication has been replaced with form authentication.
 - [server] Default account password is now randomized in release builds.
+## Removed
+- [global] Removed projects `Nojira.Utils` and `Nojira.Admin`. Database and config are back in the `Nojira.Server` project.
 
 ## v0.5-dev - 2021-03-07
 ### Added
