@@ -20,6 +20,9 @@
 
 // TODO: --restore-admin
 // TODO: Remove Nojira.Admin and migrate Nojira.Utils?
+
+using System.Linq;
+
 namespace Nojira.Server
 {
     public class Program
@@ -52,14 +55,18 @@ namespace Nojira.Server
 
             System.Console.WriteLine($"Connecting to database '{Nojira.Utils.Config.DatabasePath}'...");
             Nojira.Utils.Database.Connect(Nojira.Utils.Config.DatabasePath, Nojira.Utils.Config.DatabasePrevPath);
-            if (Nojira.Utils.Database.CountUser() == 0)
+            if (Nojira.Utils.Database.CountUser(true) == 0 || args.Contains("--restore-admin"))
             {
+                if (Nojira.Utils.Database.GetUser(Program.DefaultUsername) != null)
+                {
+                    Nojira.Utils.Database.DeleteUser(Program.DefaultUsername);
+                }
+
                 string password = Nojira.Utils.Database.User.GenerateRandomPassword();
                 Nojira.Utils.Database.CreateUser(new Nojira.Utils.Database.User(Program.DefaultUsername, password, true));
 
                 System.Console.WriteLine("##################################################################");
-                System.Console.WriteLine($"##     Created default user account ({Program.DefaultUsername}:{password}).            ##");
-                System.Console.WriteLine("##     Remember to create a proper one and remove this one.     ##");
+                System.Console.WriteLine($"##     Created default admin account ({Program.DefaultUsername}:{password}).           ##");
                 System.Console.WriteLine("##################################################################");
             }
 
