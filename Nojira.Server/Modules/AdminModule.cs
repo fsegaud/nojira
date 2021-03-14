@@ -54,9 +54,18 @@ namespace Nojira.Server
                     string username = this.Request.Form.Username;
                     string password = this.Request.Form.Password;
 
-                    if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+                    if (!string.IsNullOrEmpty(username))
                     {
-                        Nojira.Utils.Database.CreateUser(new Nojira.Utils.Database.User(username, password));
+                        if (!string.IsNullOrEmpty(password))
+                        {
+                            Nojira.Utils.Database.CreateUser(new Nojira.Utils.Database.User(username, password));
+                            return Response.AsRedirect("/admin");
+                        }
+                        else
+                        {
+                            int id = Nojira.Utils.Database.CreateUser(new Nojira.Utils.Database.User(username));
+                            return Response.AsRedirect($"/admin/user/{id}/reset");
+                        }
                     }
 
                     return Response.AsRedirect("/admin");
@@ -76,6 +85,19 @@ namespace Nojira.Server
                 });
 
             this.Get(
+                "/purge-tokens",
+                args =>
+                {
+                    if (!this.IsAdmin())
+                    {
+                        return Response.AsRedirect("/");
+                    }
+
+                    Nojira.Utils.Database.DeleteAllUserTokens();
+                    return Response.AsRedirect("/admin");
+                });
+
+            this.Get(
                 "/shutdown",
                 args =>
                 {
@@ -89,7 +111,7 @@ namespace Nojira.Server
                 });
 
             this.Get(
-                "/delete-user/{id}",
+                "/user/{id}/delete",
                 args =>
                 {
                     if (!this.IsAdmin())
@@ -102,7 +124,7 @@ namespace Nojira.Server
                 });
 
             this.Get(
-                "/promote-user/{id}",
+                "/user/{id}/promote",
                 args =>
                 {
                     if (!this.IsAdmin())
@@ -115,7 +137,7 @@ namespace Nojira.Server
                 });
 
             this.Get(
-                "/demote-user/{id}",
+                "/user/{id}/demote",
                 args =>
                 {
                     if (!this.IsAdmin())
@@ -125,6 +147,34 @@ namespace Nojira.Server
 
                     Nojira.Utils.Database.SetUserRole(int.Parse(args.id), false);
                     return Response.AsRedirect("/admin");
+                });
+
+            this.Get(
+                "/user/{id}/reset",
+                args =>
+                {
+                    if (!this.IsAdmin())
+                    {
+                        return Response.AsRedirect("/");
+                    }
+
+                    string guid = System.Guid.NewGuid().ToString();
+                    System.DateTime expire = System.DateTime.Now.AddDays(1);
+                    Nojira.Utils.Database.CreateUserToken(new Nojira.Utils.Database.UserToken(args.id, guid, expire));
+
+                    return Response.AsRedirect($"/admin/url/account/{args.id}/{guid}");
+                });
+
+            this.Get(
+                "/url/{url*}",
+                args =>
+                {
+                    if (!this.IsAdmin())
+                    {
+                        return Response.AsRedirect("/");
+                    }
+
+                    return this.View["url", new UrlModel(this.Context, this.IsAdmin(), Nojira.Utils.Config.BaseUri.TrimEnd('/') + "/" + args.Url)]; 
                 });
         }
 

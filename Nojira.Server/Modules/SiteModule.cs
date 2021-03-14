@@ -59,7 +59,7 @@ namespace Nojira.Server
                     System.Guid? guid = NojiraUserMapper.ValidateUser((string)this.Request.Form.Username, (string)this.Request.Form.Password);
                     if (guid == null)
                     {
-                        return this.Context.GetRedirect($"~/login?error=true{(string)this.Request.Form.Username}");
+                        return this.Context.GetRedirect($"~/login?error=true");
                     }
 
                     System.DateTime? expiry = null;
